@@ -1,0 +1,16 @@
+.menu-container {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+        cursor: pointer;
+        padding: 0.7rem;
+
+        &.active {
+            font-weight: bold;
+        }
+        &:hover {
+            background-color: aliceblue;
+        }
+    }
+}

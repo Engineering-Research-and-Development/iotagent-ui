@@ -1,0 +1,25 @@
+<p-fieldset legend="Service & service path" class="w-full">
+    <div class="m-0 flex flex-column gap-2 mt-5" [formGroup]="form">
+        <small id="service-help">Enter FIWARE service</small>
+            <div class="w-full flex flex-row">
+                <input pInputText [readOnly]="loading" formControlName="service" aria-describedby="service-help" class="w-full"/>
+            </div>
+            <div *ngIf="form.controls.service.invalid && (form.controls.service.dirty || form.controls.service.touched)" class="form-alert">
+                <div *ngIf="form.controls.service.errors?.['required']">Service is required</div>
+            </div>
+
+            <small id="servicePath-help">Enter FIWARE service path</small>
+            <div class="w-full flex flex-row">
+                <input pInputText [readOnly]="loading" formControlName="servicePath" aria-describedby="servicePath-help" class="w-full"/>
+            </div>
+            <div *ngIf="form.controls.servicePath.invalid && (form.controls.servicePath.dirty || form.controls.servicePath.touched)" class="form-alert">
+                <div *ngIf="form.controls.servicePath.errors?.['required']">Service path is required</div>
+            </div>
+
+            <div class="card flex justify-content-start gap-2">
+                <p-button (onClick)="onSave()" [disabled]="loading" label="Save" class="mt-5" icon="pi pi-save" iconPos="right" size="small"></p-button>
+                <p-button (onClick)="onClear()" [disabled]="loading" label="Clear" class="mt-5" icon="pi pi-times" iconPos="right" size="small" severity="secondary"></p-button>
+                <ng-content></ng-content>
+            </div>
+    </div>
+</p-fieldset>

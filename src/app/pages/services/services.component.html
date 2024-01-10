@@ -1,0 +1,26 @@
+<app-main-sidebar></app-main-sidebar>
+<p-card>
+    <app-global-input>
+        <p-button (onClick)="onSubmit()" [disabled]="loading" label="Get services" class="mt-5" icon="pi pi-angle-double-down" iconPos="right" size="small"></p-button>
+    </app-global-input>
+</p-card>
+
+<div *ngIf="services" class="flex gap-2 mt-5 w-full">
+    <p-fieldset legend="Services" class="flex-grow-1">
+        <div *ngIf="services">
+            <p-splitter [style]="{ width: '100%' }" styleClass="mb-5">
+                <ng-template pTemplate>
+                    <div class="col overflow-y-scroll overflow-x-scroll" style="max-width: 50vw;">
+                        <ngx-json-viewer [depth]="2" [json]="services"></ngx-json-viewer>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate>
+                    <div class="col overflow-y-scroll overflow-x-scroll">
+                        <pre>{{services | json}}</pre>
+                    </div>
+                </ng-template>
+            </p-splitter>
+            
+        </div>
+    </p-fieldset>
+</div>
