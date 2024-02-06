@@ -11,11 +11,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { FieldsetModule } from 'primeng/fieldset';
 import { GlobalInputComponent } from './global-input/global-input.component';
+import { AddAgentComponent } from './add-agent/add-agent.component';
+import { DetailAgentComponent } from './detail-agent/detail-agent.component';
+import { CardModule } from 'primeng/card';
+import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
+import { FileUploadModule } from 'primeng/fileupload';
+import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   declarations: [
     MainSidebarComponent,
-    GlobalInputComponent
+    GlobalInputComponent,
+    AddAgentComponent,
+    DetailAgentComponent
   ],
   imports: [
     CommonModule,
@@ -23,16 +34,25 @@ import { GlobalInputComponent } from './global-input/global-input.component';
     ButtonModule,
     DividerModule,
     MenuModule,
+    CardModule,
     ConfirmDialogModule,
     BreadcrumbModule,
     FormsModule,
     InputTextModule,
     ReactiveFormsModule,
-    FieldsetModule
+    FieldsetModule,
+    ToastModule,
+    ToolbarModule,
+    FileUploadModule,
+    TableModule,
+    DropdownModule,
+    ImageModule
   ],
   exports: [
     MainSidebarComponent,
-    GlobalInputComponent
+    GlobalInputComponent,
+    DetailAgentComponent,
+    AddAgentComponent
   ]
 })
 export class ComponentsModule { }

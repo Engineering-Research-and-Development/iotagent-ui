@@ -75,4 +75,39 @@ export class SessionService {
     return localStorage.getItem('activeServicePath');
   }
 
+  addAgent(agent:any) {
+    let strAgents = localStorage.getItem('agents');
+    let agents = [];
+    if(!strAgents) {
+      agents = [];
+    } else {
+      agents = JSON.parse(strAgents);
+    }
+    const index = agents.findIndex((a: any) => a.host === agent.host && a.port === agent.port && a.apiKey === agent.apiKey);
+    if(index >= 0) {
+      return {error: 'Agent already exists'};
+    }
+    agents.push(agent);
+    localStorage.setItem('agents', JSON.stringify(agents));
+    return null;
+  }
+
+  deleteAgent(agent:any) {
+    let strAgents = localStorage.getItem('agents');
+    if(!strAgents) {
+      return;
+    }
+    const agents = JSON.parse(strAgents);
+    const newAgents = agents.filter((a: any) => a.host !== agent.host && a.port !== agent.port && a.apiKey !== agent.apiKey);
+    localStorage.setItem('agents', JSON.stringify(newAgents));
+  }
+
+  getAgents() {
+    const strAgents = localStorage.getItem('agents');
+    if(strAgents) {
+      return JSON.parse(strAgents);
+    }
+    return [];
+  }
+
 }

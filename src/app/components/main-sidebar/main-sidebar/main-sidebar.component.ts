@@ -16,6 +16,9 @@ export class MainSidebarComponent {
 
   menuItems = [
     {
+      label: 'Agent list', icon: 'pi pi-list', routerLink: '/agent-list'
+    },
+    {
       label: 'Connection', icon: 'pi pi-wifi', routerLink: '/connection'
     },
     {

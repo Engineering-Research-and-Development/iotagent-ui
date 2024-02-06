@@ -11,6 +11,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from './services/session/token.interceptor';
 import { JsonPipe } from '@angular/common';
 import { DevicesModule } from './pages/devices/devices.module';
+import { AgentListModule } from './pages/agent-list/agent-list/agent-list.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { DevicesModule } from './pages/devices/devices.module';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    AgentListModule,
     BootstrapModule,
     ConnectionModule,
     ServicesModule,

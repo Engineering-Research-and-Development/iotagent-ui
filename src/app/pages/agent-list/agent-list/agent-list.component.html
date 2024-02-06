@@ -1,0 +1,74 @@
+<app-main-sidebar></app-main-sidebar>
+
+<div class="grid">
+    <div class="col">
+        <div (click)="onAddAgent()">
+            <div class="p-card p-component w-15rem h-15rem">
+                <div class="p-card-boy p-3">
+                    <div class="p-card-content h-full">
+                        <div class="grid">
+                            <div class="col">
+                                <div class="flex justify-content-center align-content-center">
+                                    <i class="pi pi-plus-circle"></i> Add
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngFor="let agent of agents" (click)="onShowAgentDetail(agent)" class="col">
+        <div class="p-card p-component w-15rem h-15rem">
+            <div class="p-card-boy p-3">
+                <div class="p-card-content">
+                    <div class="flex justify-content-end">
+                        <div (click)="onDeleteAgent($event, agent)" class="mb-3"><i class="pi pi-trash"></i> </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col">
+                            <strong>Host</strong>
+                        </div>
+                        <div class="col">
+                            {{agent.host}}
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col">
+                            <strong>Port</strong>
+                        </div>
+                        <div class="col">
+                            {{agent.port}}
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col">
+                            <strong>API Key</strong>
+                        </div>
+                        <div class="col">
+                            {{agent.apiKey}}
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col">
+                            <strong>Status</strong>
+                        </div>
+                        <div class="col">
+                            <span>
+                                <i class="pi pi-circle-fill" style="color: green;"></i> Connected
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog header="Add agent" [(visible)]="isOpenAddAgentDialog" [modal]="true" [draggable]="false" [resizable]="false" class="w-6">
+    <app-add-agent (addAgentEventEmitter)="onCloseAddAgent()"></app-add-agent>
+</p-dialog>
+
+<p-dialog header="Agent detail" [(visible)]="isOpenDetailAgentDialog && selectedAgent" [modal]="true" [draggable]="false" [resizable]="false" class="w-6">
+    <app-detail-agent></app-detail-agent>
+</p-dialog>

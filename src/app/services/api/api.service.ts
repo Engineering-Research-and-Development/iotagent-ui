@@ -26,4 +26,8 @@ export class ApiService {
     return this.httpClient.get(`${this.sessionService.getActiveEndpoint()}/${this.sessionService.getActiveApiKey()}/devices`);
   }
 
+  buildAgentUrl(agent: any) {
+    return `http://${agent.host}:${agent.port}/${agent.apiKey}`;
+  }
+
 }
