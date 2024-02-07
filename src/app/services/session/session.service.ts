@@ -11,68 +11,67 @@ export class SessionService {
               private messageService: MessageService) { }
 
   checkSession() {
-    if(this.getActiveEndpoint() && this.getActiveApiKey()) {
+    if(this.getActiveAgent() && this.getActiveService() && this.getActiveServicePath()) {
       return true;
     } else {
-      this.messageService.add({severity: 'warn', summary:  'Missing endpoint or apiKey', detail: 'Please retry connection' });
+      this.messageService.add({severity: 'warn', summary:  'Attention', detail: 'No agent monitoring' });
       this.router.navigate(['/']);
       return false;
     }
   }
 
   deleteSession() {
-    this.setActiveEndpoint(null);
-    this.setActiveApiKey(null);
+    this.setActiveAgent(null);
     this.setActiveService(null);
     this.setActiveServicePath(null);
   }
 
-  setActiveEndpoint(endpoint: string | null) {
-    if(endpoint) {
-      localStorage.setItem('activeEndpoint', endpoint);
+  setActiveAgent(agent: any) {
+    if(agent) {
+      localStorage.setItem('activeAgent', agent);
     } else {
-      localStorage.removeItem('activeEndpoint');
+      localStorage.removeItem('activeAgent');
     }
   }
 
-  getActiveEndpoint() {
-    return localStorage.getItem('activeEndpoint');
-  }
-
-  setActiveApiKey(endpoint: string | null) {
-    if(endpoint) {
-      localStorage.setItem('activeApiKey', endpoint);
-    } else {
-      localStorage.removeItem('activeApiKey');
-    }
-  }
-
-  getActiveApiKey() {
-    return localStorage.getItem('activeApiKey');
-  }
-
-  setActiveService(endpoint: string | null) {
-    if(endpoint) {
-      localStorage.setItem('activeService', endpoint);
+  setActiveService(service: any) {
+    if(service) {
+      localStorage.setItem('activeService', service);
     } else {
       localStorage.removeItem('activeService');
     }
   }
 
-  getActiveService(): any {
-    return localStorage.getItem('activeService');
-  }
-
-  setActiveServicePath(endpoint: string | null): any {
-    if(endpoint) {
-      localStorage.setItem('activeServicePath', endpoint);
+  setActiveServicePath(servicePath: any) {
+    if(servicePath) {
+      localStorage.setItem('activeServicePath', servicePath);
     } else {
       localStorage.removeItem('activeServicePath');
     }
   }
 
-  getActiveServicePath(): any {
-    return localStorage.getItem('activeServicePath');
+  getActiveAgent() {
+    const activeAgent = localStorage.getItem('activeAgent');
+    if(activeAgent) {
+      return JSON.parse(activeAgent);
+    }
+    return null;
+  }
+
+  getActiveService() {
+    const activeService = localStorage.getItem('activeService');
+    if(activeService) {
+      return JSON.parse(activeService);
+    }
+    return null;
+  }
+
+  getActiveServicePath() {
+    const activeServicePath = localStorage.getItem('activeServicePath');
+    if(activeServicePath) {
+      return JSON.parse(activeServicePath);
+    }
+    return null;
   }
 
   addAgent(agent:any) {

@@ -4,3 +4,12 @@
         background-color: #e6e6e6;
     }
 }
+
+.inactive-card{
+    opacity: 0.8;
+    background-color: #dfdfdf;
+    &:hover {
+        opacity: 0.8;
+        background-color: #dfdfdf;
+    }
+}

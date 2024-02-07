@@ -55,3 +55,9 @@
         <div class="flex align-items-center justify-content-between">In total there are {{ services ? services.length : 0 }} services.</div>
     </ng-template>
 </p-table>
+
+
+<p-dialog header="Add service" [(visible)]="isOpenAddServiceDialog" [modal]="true" [draggable]="false" [resizable]="false" class="w-6">
+    <app-add-service (addServiceEventEmitter)="onCloseAddService()"></app-add-service>
+  </p-dialog>
+    

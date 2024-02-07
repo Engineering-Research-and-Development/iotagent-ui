@@ -20,13 +20,16 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { ImageModule } from 'primeng/image';
+import { AddServiceComponent } from './add-service/add-service.component';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [
     MainSidebarComponent,
     GlobalInputComponent,
     AddAgentComponent,
-    DetailAgentComponent
+    DetailAgentComponent,
+    AddServiceComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +49,8 @@ import { ImageModule } from 'primeng/image';
     FileUploadModule,
     TableModule,
     DropdownModule,
-    ImageModule
+    ImageModule,
+    DialogModule
   ],
   exports: [
     MainSidebarComponent,

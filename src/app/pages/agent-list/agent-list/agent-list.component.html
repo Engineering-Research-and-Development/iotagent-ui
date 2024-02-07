@@ -1,11 +1,11 @@
 <app-main-sidebar></app-main-sidebar>
 
 <div class="grid">
-    <div class="col">
+    <div class="col col-fixed">
         <div (click)="onAddAgent()">
-            <div class="p-card p-component w-15rem h-15rem">
-                <div class="p-card-boy p-3">
-                    <div class="p-card-content h-full">
+            <div class="p-card p-component w-18rem h-18rem">
+                <div class="p-card-boy p-2">
+                    <div class="p-card-content h-full px-2">
                         <div class="grid">
                             <div class="col">
                                 <div class="flex justify-content-center align-content-center">
@@ -18,12 +18,25 @@
             </div>
         </div>
     </div>
-    <div *ngFor="let agent of agents" (click)="onShowAgentDetail(agent)" class="col">
-        <div class="p-card p-component w-15rem h-15rem">
-            <div class="p-card-boy p-3">
-                <div class="p-card-content">
-                    <div class="flex justify-content-end">
-                        <div (click)="onDeleteAgent($event, agent)" class="mb-3"><i class="pi pi-trash"></i> </div>
+    <div *ngFor="let agent of agents" (click)="onShowAgentDetail(agent)" class="col col-fixed">
+        <div class="p-card p-component w-18rem h-18rem" [ngClass]="{'inactive-card': agent.status != 'active'}">
+            <div class="p-card-boy p-2">
+                <div class="p-card-content pt-0 pb-0 px-2">
+                    <div class="grid align-items-center">
+                        <div class="col">
+                            <p-image styleClass="rounded-image" [src]="agent.img" alt="Image" height="75"></p-image>
+                        </div>
+                        <div class="col text-right">
+                            <div (click)="onDeleteAgent($event, agent)" class="mb-3"><i class="pi pi-trash"></i> </div>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col">
+                            <strong>Type</strong>
+                        </div>
+                        <div class="col">
+                            {{utils.agentTypesMap[agent.type]}}
+                        </div>
                     </div>
                     <div class="grid">
                         <div class="col">
@@ -54,8 +67,11 @@
                             <strong>Status</strong>
                         </div>
                         <div class="col">
-                            <span>
-                                <i class="pi pi-circle-fill" style="color: green;"></i> Connected
+                            <span *ngIf="agent.status === 'active'">
+                                <i class="pi pi-circle-fill" style="color: green;"></i> Active
+                            </span>
+                            <span *ngIf="agent.status !== 'active'">
+                                <i class="pi pi-circle-fill" style="color: grey;"></i> Inactive
                             </span>
                         </div>
                     </div>

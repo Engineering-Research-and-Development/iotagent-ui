@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { SessionService } from '../session/session.service';
+import Utils from 'src/app/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -15,19 +16,15 @@ export class ApiService {
   }
 
   getVersion() {
-    return this.httpClient.get(`${this.sessionService.getActiveEndpoint()}/version`);
+    return this.httpClient.get(`${Utils.buildAgentBaseUrl(this.sessionService.getActiveAgent())}/version`);
   }
 
   getServices() {
-    return this.httpClient.get(`${this.sessionService.getActiveEndpoint()}/${this.sessionService.getActiveApiKey()}/services`);
+    return this.httpClient.get(`${Utils.buildAgentUrl(this.sessionService.getActiveAgent())}/services`);
   }
 
   getDevices() {
-    return this.httpClient.get(`${this.sessionService.getActiveEndpoint()}/${this.sessionService.getActiveApiKey()}/devices`);
-  }
-
-  buildAgentUrl(agent: any) {
-    return `http://${agent.host}:${agent.port}/${agent.apiKey}`;
+    return this.httpClient.get(`${Utils.buildAgentUrl(this.sessionService.getActiveAgent())}/devices`);
   }
 
 }

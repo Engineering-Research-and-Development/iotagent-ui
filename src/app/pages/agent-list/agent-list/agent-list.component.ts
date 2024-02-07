@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/services/api/api.service';
 import { SessionService } from 'src/app/services/session/session.service';
+import Utils from 'src/app/utils';
 
 @Component({
   selector: 'app-agent-list',
@@ -7,21 +9,41 @@ import { SessionService } from 'src/app/services/session/session.service';
   styleUrls: ['./agent-list.component.scss']
 })
 export class AgentListComponent implements OnInit {
+  
   agents: any = [];
-
+  utils = Utils;
   selectedAgent: any;
   isOpenAddAgentDialog: boolean = false;
   isOpenDetailAgentDialog: boolean = false;
+  pollingTimer: any;
 
-  constructor(private sessionService: SessionService) {}
+  constructor(private sessionService: SessionService,
+              private apiService: ApiService) {}
 
   ngOnInit() {
     this.getAgents();
+    this.pollingTimer = setInterval(() => {
+      for(let agent of this.agents) {
+        console.log('polling', agent);
+        this.testAgent(agent);
+      }
+    }, 10000);
+  }
+
+  testAgent(agent: any) {
+    this.apiService.testConnection(Utils.buildAgentBaseUrl(agent)).subscribe((result: any) => {
+      if(result) {
+        agent.status = 'active';
+      } else {
+        agent.status = 'inactive';
+      }
+    }, (err: any) => {
+      agent.status = null;
+    });
   }
 
   getAgents() {
     this.agents = this.sessionService.getAgents();
-    console.log(this.agents);
   }
 
   onAddAgent() {
@@ -40,8 +62,11 @@ export class AgentListComponent implements OnInit {
   }
 
   onShowAgentDetail(agent: any) {
-    this.selectedAgent = agent;
-    this.isOpenDetailAgentDialog = true;
+    if(agent.status == "active"){
+      this.selectedAgent = agent;
+      this.isOpenDetailAgentDialog = true;
+    }else{
+      this.selectedAgent = null
+    }
   }
-
 }
