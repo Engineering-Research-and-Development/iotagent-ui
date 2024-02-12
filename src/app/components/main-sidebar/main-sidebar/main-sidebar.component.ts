@@ -35,7 +35,6 @@ export class MainSidebarComponent {
   constructor(private router: Router,
               private confirmationService: ConfirmationService,
               private sessionService: SessionService) {
-    this.sessionService.checkSession();
     this.activeElem = this.router.url;
     const menuItemIndex = this.menuItems.findIndex(item => item.routerLink === this.activeElem);
     this.breadItems = [

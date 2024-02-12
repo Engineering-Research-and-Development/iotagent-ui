@@ -4,6 +4,7 @@ import { SessionService } from 'src/app/services/session/session.service';
 import Utils from 'src/app/utils';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddAgentComponent } from 'src/app/components/add-agent/add-agent.component';
+import { DetailAgentComponent } from 'src/app/components/detail-agent/detail-agent.component';
 
 @Component({
   selector: 'app-agent-list',
@@ -15,6 +16,7 @@ export class AgentListComponent implements OnInit {
   agents: any = [];
   utils = Utils;
   addAgentDialogRef: DynamicDialogRef | undefined;
+  detailAgentDialogRef: DynamicDialogRef | undefined;
   pollingTimer: any;
 
   constructor(private sessionService: SessionService,
@@ -79,6 +81,9 @@ export class AgentListComponent implements OnInit {
   }
 
   onShowAgentDetail(agent: any) {
-    
+    this.detailAgentDialogRef = this.dialogService.open(DetailAgentComponent, { header: 'Agent detail', data: {
+      agent,
+      onClose: () => {  }
+    }});
   }
 }
