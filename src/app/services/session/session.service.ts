@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import * as uuid from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -74,7 +75,7 @@ export class SessionService {
     return null;
   }
 
-  addAgent(agent:any) {
+  editAgent(agent:any) {
     let strAgents = localStorage.getItem('agents');
     let agents = [];
     if(!strAgents) {
@@ -82,10 +83,30 @@ export class SessionService {
     } else {
       agents = JSON.parse(strAgents);
     }
-    const index = agents.findIndex((a: any) => a.host === agent.host && a.port === agent.port && a.apiKey === agent.apiKey);
+    console.log(agent)
+    console.log(agents)
+    const index = agents.findIndex((a: any) => a.id === agent.id);
+    if(index < 0) {
+      return {error: 'Agent does not exists'};
+    }
+    this.deleteAgent(agent);
+    this.addAgent(agent);
+    return null;
+  }
+
+  addAgent(agent: any) {
+    let strAgents = localStorage.getItem('agents');
+    let agents = [];
+    if(!strAgents) {
+      agents = [];
+    } else {
+      agents = JSON.parse(strAgents);
+    }
+    const index = agents.findIndex((a: any) => a.port === agent.port && a.apiKey === agent.apiKey && a.host === agent.host);
     if(index >= 0) {
       return {error: 'Agent already exists'};
     }
+    agent.id = uuid.v4();
     agents.push(agent);
     localStorage.setItem('agents', JSON.stringify(agents));
     return null;
@@ -97,7 +118,7 @@ export class SessionService {
       return;
     }
     const agents = JSON.parse(strAgents);
-    const newAgents = agents.filter((a: any) => a.host !== agent.host && a.port !== agent.port && a.apiKey !== agent.apiKey);
+    const newAgents = agents.filter((a: any) => a.id !== agent.id);
     localStorage.setItem('agents', JSON.stringify(newAgents));
   }
 
@@ -110,3 +131,5 @@ export class SessionService {
   }
 
 }
+
+

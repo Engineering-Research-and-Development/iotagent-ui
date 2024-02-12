@@ -27,7 +27,12 @@
                             <p-image styleClass="rounded-image" [src]="agent.img" alt="Image" height="75"></p-image>
                         </div>
                         <div class="col text-right">
-                            <div (click)="onDeleteAgent($event, agent)" class="mb-3"><i class="pi pi-trash"></i> </div>
+                            <div class="display-inline">
+                                <div (click)="onEditAgent($event, agent)" class="mb-3"><i class="pi pi-pencil"></i> </div>
+                            </div>
+                            <div class="display-inline">
+                                <div (click)="onDeleteAgent($event, agent)" class="mb-3"><i class="pi pi-trash"></i> </div>
+                            </div>
                         </div>
                     </div>
                     <div class="grid">
@@ -80,11 +85,3 @@
         </div>
     </div>
 </div>
-
-<p-dialog header="Add agent" [(visible)]="isOpenAddAgentDialog" [modal]="true" [draggable]="false" [resizable]="false" class="w-6">
-    <app-add-agent (addAgentEventEmitter)="onCloseAddAgent()"></app-add-agent>
-</p-dialog>
-
-<p-dialog header="Agent detail" [(visible)]="isOpenDetailAgentDialog && selectedAgent" [modal]="true" [draggable]="false" [resizable]="false" class="w-6">
-    <app-detail-agent></app-detail-agent>
-</p-dialog>

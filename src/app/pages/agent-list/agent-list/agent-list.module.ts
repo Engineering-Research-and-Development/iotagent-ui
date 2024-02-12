@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { ComponentsModule } from "../../../components/components.module";
 import { DialogModule } from 'primeng/dialog';
 import { ImageModule } from 'primeng/image';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,9 @@ import { ImageModule } from 'primeng/image';
         ComponentsModule,
         DialogModule,
         ImageModule
+    ],
+    providers: [
+        DialogService
     ]
 })
 export class AgentListModule { }

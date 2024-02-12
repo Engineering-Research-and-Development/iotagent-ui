@@ -22,6 +22,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ImageModule } from 'primeng/image';
 import { AddServiceComponent } from './add-service/add-service.component';
 import { DialogModule } from 'primeng/dialog';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,9 @@ import { DialogModule } from 'primeng/dialog';
     GlobalInputComponent,
     DetailAgentComponent,
     AddAgentComponent
+  ],
+  providers: [
+    DialogService
   ]
 })
 export class ComponentsModule { }

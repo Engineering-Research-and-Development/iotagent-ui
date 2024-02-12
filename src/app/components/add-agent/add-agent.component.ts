@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { SessionService } from 'src/app/services/session/session.service';
 
 @Component({
@@ -9,8 +10,7 @@ import { SessionService } from 'src/app/services/session/session.service';
   styleUrls: ['./add-agent.component.scss']
 })
 
-export class AddAgentComponent {
-  @Output() addAgentEventEmitter = new EventEmitter<any>();
+export class AddAgentComponent implements OnInit {
 
   imageSource: any = "https://i1.wp.com/gelatologia.com/wp-content/uploads/2020/07/placeholder.png"
 
@@ -43,6 +43,7 @@ export class AddAgentComponent {
   ];
 
   form = new FormGroup({
+    id: new FormControl(null, []),
     host: new FormControl(null, [
       Validators.required
     ]),
@@ -53,14 +54,27 @@ export class AddAgentComponent {
     apiKey: new FormControl(null, [
       Validators.required
     ]),
-    selectedType: new FormControl(null, [
+    type: new FormControl(null, [
       Validators.required
     ]),
   });
   loading: boolean = false;
 
   constructor(private messageService: MessageService,
-    private sessionService: SessionService) { }
+    private sessionService: SessionService,
+    private dialogConfig: DynamicDialogConfig) {
+      
+    }
+
+  ngOnInit() {
+    if(this.dialogConfig.data.objectToEdit) {
+      this.form.controls.id.setValue(this.dialogConfig.data.objectToEdit.id);
+      this.form.controls.apiKey.setValue(this.dialogConfig.data.objectToEdit.apiKey);
+      this.form.controls.host.setValue(this.dialogConfig.data.objectToEdit.host);
+      this.form.controls.port.setValue(this.dialogConfig.data.objectToEdit.port);
+      this.form.controls.type.setValue(this.dialogConfig.data.objectToEdit.type);
+    }
+  }
 
   onSubmit() {
     this.loading = true;
@@ -69,25 +83,32 @@ export class AddAgentComponent {
       this.loading = false;
       return;
     }
-    const selectedAgentType: any = this.form.controls.selectedType.value;
+    const selectedAgentType: any = this.form.controls.type.value;
     if (selectedAgentType) {
-      const index = this.agentTypes.findIndex((e: any) => e.value === selectedAgentType.value);
+      const index = this.agentTypes.findIndex((e: any) => e.value === selectedAgentType);
       const agent = {
+        id: this.form.controls.id.value,
         host: this.form.controls.host.value,
         port: this.form.controls.port.value,
         apiKey: this.form.controls.apiKey.value,
-        type: this.agentTypes[index].value,
+        type: this.form.controls.type.value,
         img: this.agentTypes[index].img
       };
-      const error = this.sessionService.addAgent(agent);
+      let error: any = null;
+      if(this.dialogConfig.data.objectToEdit) {
+        error = this.sessionService.editAgent(agent);
+      } else {
+        error = this.sessionService.addAgent(agent);
+      }
+      this.form.reset();
       this.loading = false;
       if (error) {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error });
-        this.addAgentEventEmitter.emit(agent);
+        this.dialogConfig.data.onClose();
         return;
       }
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Agent added correctly' });
-      this.addAgentEventEmitter.emit(agent);
+      this.dialogConfig.data.onClose();
     } else {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: "No agent type was selected" });
     }
@@ -95,11 +116,11 @@ export class AddAgentComponent {
 
   onCancel() {
     this.form.reset();
-    this.addAgentEventEmitter.emit();
+    this.dialogConfig.data.onClose();
   }
 
   onTypeChange(event: any) {
-    const index = this.agentTypes.findIndex((t: any) => t.value === event.value.value);
+    const index = this.agentTypes.findIndex((t: any) => t.value === event.value);
     this.imageSource = this.agentTypes[index].img;
   }
 

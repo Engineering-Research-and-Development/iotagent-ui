@@ -1,9 +1,10 @@
 <p-card>
     <form [formGroup]="form" class="flex flex-column">
-      <p-image styleClass="rounded-image" [src]="imageSource" alt="Image" width="250"></p-image>
-      <p-dropdown formControlName="selectedType" [options]="agentTypes" optionLabel="label" placeholder="Select a type" (onChange)="onTypeChange($event)"></p-dropdown>
-      <div *ngIf="form.controls.selectedType.invalid && (form.controls.selectedType.dirty || form.controls.selectedType.touched)" class="form-alert">
-        <div *ngIf="form.controls.selectedType.errors?.['required']">SelectedType for the Agent is required</div>
+      <input type="hidden" formControlName="id">
+      <p-image styleClass="rounded-image" [src]="imageSource" alt="Image" width="150"></p-image>
+      <p-dropdown formControlName="type" [options]="agentTypes" optionValue="value" optionLabel="label" placeholder="Select a type" (onChange)="onTypeChange($event)"></p-dropdown>
+      <div *ngIf="form.controls.type.invalid && (form.controls.type.dirty || form.controls.type.touched)" class="form-alert">
+        <div *ngIf="form.controls.type.errors?.['required']">SelectedType for the Agent is required</div>
       </div>
       <input pInputText [readOnly]="loading" formControlName="host" placeholder="host" class="my-2"/>
       <div *ngIf="form.controls.host.invalid && (form.controls.host.dirty || form.controls.host.touched)" class="form-alert">
@@ -19,7 +20,7 @@
       </div>
       <div class="flex flex-row mt-2">
         <p-button label="Cancel" [disabled]="loading" severity="secondary" (click)="onCancel()" class="mr-2"></p-button>
-        <p-button label="Register" [disabled]="loading" (click)="onSubmit()"></p-button>
+        <p-button label="Add" [disabled]="loading" (click)="onSubmit()"></p-button>
       </div>
       
     </form>

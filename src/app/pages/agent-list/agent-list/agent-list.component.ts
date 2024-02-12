@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
 import { SessionService } from 'src/app/services/session/session.service';
 import Utils from 'src/app/utils';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AddAgentComponent } from 'src/app/components/add-agent/add-agent.component';
 
 @Component({
   selector: 'app-agent-list',
@@ -12,22 +14,26 @@ export class AgentListComponent implements OnInit {
   
   agents: any = [];
   utils = Utils;
-  selectedAgent: any;
-  isOpenAddAgentDialog: boolean = false;
-  isOpenDetailAgentDialog: boolean = false;
+  addAgentDialogRef: DynamicDialogRef | undefined;
   pollingTimer: any;
 
   constructor(private sessionService: SessionService,
-              private apiService: ApiService) {}
+              private apiService: ApiService,
+              private dialogService: DialogService) {}
 
   ngOnInit() {
     this.getAgents();
     this.pollingTimer = setInterval(() => {
       for(let agent of this.agents) {
-        console.log('polling', agent);
         this.testAgent(agent);
       }
     }, 10000);
+  }
+
+  testAgents() {
+    for(let agent of this.agents) {
+      this.testAgent(agent);
+    }
   }
 
   testAgent(agent: any) {
@@ -44,10 +50,13 @@ export class AgentListComponent implements OnInit {
 
   getAgents() {
     this.agents = this.sessionService.getAgents();
+    this.testAgents();
   }
 
   onAddAgent() {
-    this.isOpenAddAgentDialog = true;
+    this.addAgentDialogRef = this.dialogService.open(AddAgentComponent, { header: 'Add agent', data: {
+      onClose: () => { this.onCloseAddAgent(); }
+    }});
   }
 
   onDeleteAgent(e: any, agent: any) {
@@ -56,17 +65,20 @@ export class AgentListComponent implements OnInit {
     this.getAgents();
   }
 
+  onEditAgent(e: any, agent: any) {
+    e.stopPropagation();
+    this.addAgentDialogRef = this.dialogService.open(AddAgentComponent, { header: 'Add agent', data: {
+      onClose: () => { this.onCloseAddAgent(); },
+      objectToEdit: agent
+    }});
+  }
+
   onCloseAddAgent() {
-    this.isOpenAddAgentDialog = false;
+    this.addAgentDialogRef?.close();
     this.getAgents();
   }
 
   onShowAgentDetail(agent: any) {
-    if(agent.status == "active"){
-      this.selectedAgent = agent;
-      this.isOpenDetailAgentDialog = true;
-    }else{
-      this.selectedAgent = null
-    }
+    
   }
 }
