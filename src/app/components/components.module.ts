@@ -23,6 +23,7 @@ import { ImageModule } from 'primeng/image';
 import { AddServiceComponent } from './add-service/add-service.component';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
+import { FocusTrapModule } from 'primeng/focustrap';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { DialogService } from 'primeng/dynamicdialog';
     TableModule,
     DropdownModule,
     ImageModule,
-    DialogModule
+    DialogModule,
+    FocusTrapModule
   ],
   exports: [
     MainSidebarComponent,

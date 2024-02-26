@@ -18,7 +18,7 @@ export class DetailAgentComponent {
   constructor(private sessionService: SessionService,
     private dialogService: DialogService,
     private dialogConfig: DynamicDialogConfig) {
-      this.agent = this.dialogConfig.data.agent;
+      this.agent = this.sessionService.getAgentById(this.dialogConfig.data.agentId);
       if(!this.agent.services) {
         this.agent.services = [];
       }
@@ -36,15 +36,13 @@ export class DetailAgentComponent {
     }});
   }
 
-  editService(service: any) {
-    
-  }
   deleteService(service: any) {
-    
+    this.sessionService.deleteService(this.agent.id, service);
+    this.refreshAgent();
   }
 
-  deleteSelectedServices(){
-
+  activateService(service: any) {
+    
   }
 
   applyFilterGlobal($event: any, stringVal: any) {

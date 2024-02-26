@@ -27,9 +27,6 @@ export class GlobalInputComponent {
       if(this.sessionService.getActiveService()) {
         this.form.controls.service.setValue(this.sessionService.getActiveService());
       }
-      if(this.sessionService.getActiveServicePath()) {
-        this.form.controls.servicePath.setValue(this.sessionService.getActiveServicePath());
-      }
   }
 
   onClear() {
@@ -37,7 +34,6 @@ export class GlobalInputComponent {
     this.form.markAsPristine();
     this.form.markAsUntouched();
     this.sessionService.setActiveService(null);
-    this.sessionService.setActiveServicePath(null);
   }
 
   onSave() {
@@ -59,7 +55,6 @@ export class GlobalInputComponent {
       return;
     }
     this.sessionService.setActiveService(service);
-    this.sessionService.setActiveServicePath(servicePath);
     this.messageService.add({severity: 'success', summary:  'Saved', detail: 'Service and service path correctly saved.' });
   }
 

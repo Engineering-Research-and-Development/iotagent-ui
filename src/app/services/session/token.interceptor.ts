@@ -3,7 +3,7 @@ import {
     HttpRequest,
     HttpHandler,
     HttpEvent,
-    HttpInterceptor, HttpErrorResponse
+    HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {SessionService} from './session.service';
@@ -17,11 +17,11 @@ export class TokenInterceptor implements HttpInterceptor {
         if (request.url.includes('/version')) {
             return next.handle(request);
         }
-        if(this.sessionService.getActiveService() && this.sessionService.getActiveServicePath()) {
+        if(this.sessionService.getActiveService()) {
             request = request.clone({
                 setHeaders: {
-                    "fiware-service": this.sessionService.getActiveService(),
-                    "fiware-servicepath": this.sessionService.getActiveServicePath()
+                    "fiware-service": this.sessionService.getActiveService().service,
+                    "fiware-servicepath": this.sessionService.getActiveService().servicePath
                 }
             });
         }

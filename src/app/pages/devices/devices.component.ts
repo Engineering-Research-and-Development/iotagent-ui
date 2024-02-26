@@ -30,9 +30,6 @@ export class DevicesComponent {
     if(this.sessionService.getActiveService()) {
       this.form.controls.service.setValue(this.sessionService.getActiveService());
     }
-    if(this.sessionService.getActiveServicePath()) {
-      this.form.controls.servicePath.setValue(this.sessionService.getActiveServicePath());
-    }
   }
 
   getServices() {
@@ -65,7 +62,6 @@ export class DevicesComponent {
       return;
     }
     this.sessionService.setActiveService(service);
-    this.sessionService.setActiveServicePath(servicePath);
     this.getServices();
   }
 
@@ -74,7 +70,6 @@ export class DevicesComponent {
     this.form.markAsPristine();
     this.form.markAsUntouched();
     this.sessionService.setActiveService(null);
-    this.sessionService.setActiveServicePath(null);
     this.devices = null;
   }
 }

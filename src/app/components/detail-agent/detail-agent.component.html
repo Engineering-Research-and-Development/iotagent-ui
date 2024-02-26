@@ -1,4 +1,3 @@
-<p-toast></p-toast>
 <p-toolbar styleClass="mb-4 gap-2">
     <ng-template pTemplate="left">
         <button pButton pRipple label="Add" icon="pi pi-plus" class="p-button-success mr-2" (click)="insertService()"></button>
@@ -38,8 +37,8 @@
             <td>{{ service.service }}</td>
             <td>{{ service.servicePath }}</td>
             <td>
-                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editService(service)"></button>
                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteService(service)"></button>
+                <button pButton pRipple icon="pi pi-arrow-right" class="p-button-rounded p-button-success" (click)="activateService(service)"></button>
             </td>
         </tr>
     </ng-template>

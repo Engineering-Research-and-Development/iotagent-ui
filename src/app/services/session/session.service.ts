@@ -12,7 +12,7 @@ export class SessionService {
               private messageService: MessageService) { }
 
   checkSession() {
-    if(this.getActiveAgent() && this.getActiveService() && this.getActiveServicePath()) {
+    if(this.getActiveAgent() && this.getActiveService()) {
       return true;
     } else {
       this.messageService.add({severity: 'warn', summary:  'Attention', detail: 'No agent monitoring' });
@@ -24,7 +24,6 @@ export class SessionService {
   deleteSession() {
     this.setActiveAgent(null);
     this.setActiveService(null);
-    this.setActiveServicePath(null);
   }
 
   setActiveAgent(agent: any) {
@@ -40,14 +39,6 @@ export class SessionService {
       localStorage.setItem('activeService', service);
     } else {
       localStorage.removeItem('activeService');
-    }
-  }
-
-  setActiveServicePath(servicePath: any) {
-    if(servicePath) {
-      localStorage.setItem('activeServicePath', servicePath);
-    } else {
-      localStorage.removeItem('activeServicePath');
     }
   }
 
@@ -67,24 +58,16 @@ export class SessionService {
     return null;
   }
 
-  getActiveServicePath() {
-    const activeServicePath = localStorage.getItem('activeServicePath');
-    if(activeServicePath) {
-      return JSON.parse(activeServicePath);
-    }
-    return null;
-  }
-
   editAgent(agent:any) {
     if(!this.getAgentById(agent.id)) {
       return {error: 'Agent does not exists'};
     }
     this.deleteAgent(agent);
-    this.addAgent(agent);
+    this.addAgent(agent, agent.id);
     return null;
   }
 
-  addAgent(agent: any) {
+  addAgent(agent: any, customUuid?: any) {
     let strAgents = localStorage.getItem('agents');
     let agents = [];
     if(!strAgents) {
@@ -96,7 +79,7 @@ export class SessionService {
     if(index >= 0) {
       return {error: 'Agent already exists'};
     }
-    agent.id = uuid.v4();
+    agent.id = customUuid ? customUuid : uuid.v4();
     agents.push(agent);
     localStorage.setItem('agents', JSON.stringify(agents));
     return null;
@@ -112,6 +95,25 @@ export class SessionService {
     }
     agent.services.push(service);
     this.editAgent(agent);
+    return;
+  }
+
+  deleteService(agentId: any, service: any) {
+    let agent = this.getAgentById(agentId);
+    if(!agent) {
+      return {error: 'Agent does not exists'};
+    }
+    if(agent.services) {
+      let newServices = [];
+      for(let s of agent.services) {
+        if(s.service !== service.service && s.servicePath !== service.servicePath) {
+          newServices.push(s);
+        }
+      }
+      agent.services = newServices;
+      this.editAgent(agent);
+      return;
+    }
     return;
   }
 

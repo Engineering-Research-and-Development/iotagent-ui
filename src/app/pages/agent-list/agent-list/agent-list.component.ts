@@ -82,7 +82,7 @@ export class AgentListComponent implements OnInit {
 
   onShowAgentDetail(agent: any) {
     this.detailAgentDialogRef = this.dialogService.open(DetailAgentComponent, { header: 'Agent detail', data: {
-      agent,
+      agentId: agent.id,
       onClose: () => {  }
     }});
   }

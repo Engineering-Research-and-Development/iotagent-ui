@@ -28,8 +28,7 @@ export class AddServiceComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    console.log(this.dialogConfig.data)
-    this.form.controls.agentId = this.dialogConfig.data.agentId;
+    this.form.controls['agentId'].setValue(this.dialogConfig.data.agentId);
   }
 
   onSubmit() {
@@ -43,7 +42,7 @@ export class AddServiceComponent implements OnInit {
       service: this.form.controls.service.value,
       servicePath: this.form.controls.servicePath.value
     };
-    const error = this.sessionService.addService(this.form.controls.agentId, service);
+    const error = this.sessionService.addService(this.form.controls.agentId.value, service);
     this.loading = false;
     if (error) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: error?.error });

@@ -12,6 +12,8 @@ import { SessionService } from 'src/app/services/session/session.service';
 
 export class AddAgentComponent implements OnInit {
 
+  isEdit = false;
+
   imageSource: any = "https://i1.wp.com/gelatologia.com/wp-content/uploads/2020/07/placeholder.png"
 
   agentTypes: any = [
@@ -68,6 +70,7 @@ export class AddAgentComponent implements OnInit {
 
   ngOnInit() {
     if(this.dialogConfig.data.objectToEdit) {
+      this.isEdit = true;
       this.form.controls.id.setValue(this.dialogConfig.data.objectToEdit.id);
       this.form.controls.apiKey.setValue(this.dialogConfig.data.objectToEdit.apiKey);
       this.form.controls.host.setValue(this.dialogConfig.data.objectToEdit.host);
