@@ -15,20 +15,20 @@ export class SessionService {
     if(this.getActiveAgent() && this.getActiveService()) {
       return true;
     } else {
-      this.messageService.add({severity: 'warn', summary:  'Attention', detail: 'No agent monitoring' });
+      this.messageService.add({severity: 'warn', summary:  'Attention', detail: 'No agent selected' });
       this.router.navigate(['/']);
       return false;
     }
   }
 
   deleteSession() {
-    this.setActiveAgent(null);
-    this.setActiveService(null);
+    localStorage.removeItem('activeAgent');
+    localStorage.removeItem('activeService');
   }
 
   setActiveAgent(agent: any) {
     if(agent) {
-      localStorage.setItem('activeAgent', agent);
+      localStorage.setItem('activeAgent', JSON.stringify(agent));
     } else {
       localStorage.removeItem('activeAgent');
     }
@@ -36,7 +36,7 @@ export class SessionService {
 
   setActiveService(service: any) {
     if(service) {
-      localStorage.setItem('activeService', service);
+      localStorage.setItem('activeService', JSON.stringify(service));
     } else {
       localStorage.removeItem('activeService');
     }

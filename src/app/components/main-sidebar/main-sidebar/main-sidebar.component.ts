@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { SessionService } from 'src/app/services/session/session.service';
+import Utils from 'src/app/utils';
 
 @Component({
   selector: 'app-main-sidebar',
@@ -14,15 +15,14 @@ export class MainSidebarComponent {
   sidebarVisible = false;
   activeElem: any = null;
 
+  activeAgent: any = null;
+  activeService: any = null;
+
+  utils = Utils;
+
   menuItems = [
     {
       label: 'Agent list', icon: 'pi pi-list', routerLink: '/agent-list'
-    },
-    {
-      label: 'Connection', icon: 'pi pi-wifi', routerLink: '/connection'
-    },
-    {
-      label: 'Services', icon: 'pi pi-globe', routerLink: '/services'
     },
     {
       label: 'Devices', icon: 'pi pi-tablet', routerLink: '/devices'
@@ -43,6 +43,27 @@ export class MainSidebarComponent {
         routerLink: this.menuItems[menuItemIndex].routerLink,
       }
     ];
+    this.checkAndSetActiveAgentAndService();
+    setInterval(() => {
+      this.checkAndSetActiveAgentAndService();
+    }, 500);
+  }
+
+  checkAndSetActiveAgentAndService() {
+    const activeAgent = this.sessionService.getActiveAgent();
+    if(activeAgent) {
+      this.activeAgent = activeAgent;
+      const activeService = this.sessionService.getActiveService();
+      if(activeService) {
+        this.activeService = activeService;
+      } else {
+        this.activeAgent = null;
+        this.activeService = null;
+      }
+    } else {
+      this.activeAgent = null;
+      this.activeService = null;
+    }
   }
 
   onMenuClick(elem: any) {
@@ -57,7 +78,7 @@ export class MainSidebarComponent {
 
   logout() {
     this.sessionService.deleteSession();
-    this.router.navigate(['/bootstrap']);
+    this.router.navigate(['/']);
   }
 
   onLogout() {

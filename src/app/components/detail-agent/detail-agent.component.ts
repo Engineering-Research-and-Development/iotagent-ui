@@ -3,11 +3,14 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dy
 import { Table } from 'primeng/table';
 import { SessionService } from 'src/app/services/session/session.service';
 import { AddServiceComponent } from '../add-service/add-service.component';
+import { MessageService } from 'primeng/api';
+import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 
 @Component({
   selector: 'app-detail-agent',
   templateUrl: './detail-agent.component.html',
-  styleUrls: ['./detail-agent.component.scss']
+  styleUrls: ['./detail-agent.component.scss'],
+  providers: [ConfirmationService]
 })
 export class DetailAgentComponent {
   @ViewChild('dt') dt: Table | undefined;
@@ -17,7 +20,9 @@ export class DetailAgentComponent {
 
   constructor(private sessionService: SessionService,
     private dialogService: DialogService,
-    private dialogConfig: DynamicDialogConfig) {
+    private dialogConfig: DynamicDialogConfig,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService) {
       this.agent = this.sessionService.getAgentById(this.dialogConfig.data.agentId);
       if(!this.agent.services) {
         this.agent.services = [];
@@ -37,12 +42,24 @@ export class DetailAgentComponent {
   }
 
   deleteService(service: any) {
-    this.sessionService.deleteService(this.agent.id, service);
-    this.refreshAgent();
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Delete Service',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.sessionService.deleteService(this.agent.id, service);
+        this.refreshAgent();
+      },
+      reject: () => {
+          return;
+      }
+    });
   }
 
   activateService(service: any) {
-    
+    this.sessionService.setActiveAgent(this.agent);
+    this.sessionService.setActiveService(service);
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: service.service +' service setted up successfully' });
   }
 
   applyFilterGlobal($event: any, stringVal: any) {
@@ -52,5 +69,9 @@ export class DetailAgentComponent {
   onCloseAddService() {
     this.addServiceDialogRef?.close();
     this.refreshAgent();
+  }
+
+  isServiceAlreadyActive(service: any){
+    return this.sessionService.getActiveService()?.service == service.service
   }
 }

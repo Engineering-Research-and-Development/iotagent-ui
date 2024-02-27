@@ -5,11 +5,13 @@ import Utils from 'src/app/utils';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddAgentComponent } from 'src/app/components/add-agent/add-agent.component';
 import { DetailAgentComponent } from 'src/app/components/detail-agent/detail-agent.component';
+import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 
 @Component({
   selector: 'app-agent-list',
   templateUrl: './agent-list.component.html',
-  styleUrls: ['./agent-list.component.scss']
+  styleUrls: ['./agent-list.component.scss'],
+  providers: [ConfirmationService]
 })
 export class AgentListComponent implements OnInit {
   
@@ -21,7 +23,8 @@ export class AgentListComponent implements OnInit {
 
   constructor(private sessionService: SessionService,
               private apiService: ApiService,
-              private dialogService: DialogService) {}
+              private dialogService: DialogService,
+              private confirmationService: ConfirmationService) {}
 
   ngOnInit() {
     this.getAgents();
@@ -63,13 +66,23 @@ export class AgentListComponent implements OnInit {
 
   onDeleteAgent(e: any, agent: any) {
     e.stopPropagation();
-    this.sessionService.deleteAgent(agent);
-    this.getAgents();
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Delete Agent',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.sessionService.deleteAgent(agent);
+        this.getAgents();
+      },
+      reject: () => {
+          return;
+      }
+    })
   }
 
   onEditAgent(e: any, agent: any) {
     e.stopPropagation();
-    this.addAgentDialogRef = this.dialogService.open(AddAgentComponent, { header: 'Add agent', data: {
+    this.addAgentDialogRef = this.dialogService.open(AddAgentComponent, { header: 'Edit agent', data: {
       onClose: () => { this.onCloseAddAgent(); },
       objectToEdit: agent
     }});

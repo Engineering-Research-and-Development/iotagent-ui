@@ -7,6 +7,8 @@ import { ComponentsModule } from "../../../components/components.module";
 import { DialogModule } from 'primeng/dialog';
 import { ImageModule } from 'primeng/image';
 import { DialogService } from 'primeng/dynamicdialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 
 @NgModule({
     declarations: [
@@ -18,10 +20,12 @@ import { DialogService } from 'primeng/dynamicdialog';
         CardModule,
         ComponentsModule,
         DialogModule,
-        ImageModule
+        ImageModule,
+        ConfirmDialogModule
     ],
     providers: [
-        DialogService
+        DialogService,
+        ConfirmationService
     ]
 })
 export class AgentListModule { }

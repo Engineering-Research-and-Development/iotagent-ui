@@ -1,7 +1,23 @@
 <p-sidebar [(visible)]="sidebarVisible">
     <img src="assets/fiware-logo.png" class="w-4"/>
     <h3 class="mt-1">IoT Agent UI</h3>
-    <h6>Men&ugrave;</h6>
+    <div *ngIf="activeAgent && activeService">
+        <h5 class="m-0">Selected agent</h5>
+        <p class="m-0">{{utils.agentTypesMap[activeAgent.type]}}</p>
+        <p class="m-0">{{utils.buildAgentUrl(activeAgent)}}</p>
+        <h5 class="mb-0">Selected service</h5>
+        <p class="m-0">{{activeService.service}}</p>
+        <h5 class="mb-0">Selected service path</h5>
+        <p class="m-0">{{activeService.servicePath}}</p>
+    </div>
+    <div *ngIf="!activeAgent || !activeService">
+        <h5>No Selected agent</h5>
+    </div>
+    <br>
+    <a *ngIf="activeAgent && activeService" href="javascript:void(0)" (click)="onLogout()"><i class="pi pi-sign-out pr-2"></i>Disconnect</a>
+    <div *ngIf="activeAgent && activeService">
+        <br><br><hr>
+    </div>
     <ul class="menu-container">
         <li *ngFor="let item of menuItems"
             (click)="onMenuClick(item.routerLink)"
@@ -10,7 +26,6 @@
             <i [class]="'pi ' + item.icon"></i> 
             {{item.label}}
         </li>
-        <li (click)="onLogout()" class="mt-3 pl-0"><i class="pi pi-power-off"></i> Close connection</li>
     </ul>
 
 </p-sidebar>

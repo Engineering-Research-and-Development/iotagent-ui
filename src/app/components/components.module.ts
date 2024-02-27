@@ -10,7 +10,6 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { FieldsetModule } from 'primeng/fieldset';
-import { GlobalInputComponent } from './global-input/global-input.component';
 import { AddAgentComponent } from './add-agent/add-agent.component';
 import { DetailAgentComponent } from './detail-agent/detail-agent.component';
 import { CardModule } from 'primeng/card';
@@ -28,7 +27,6 @@ import { FocusTrapModule } from 'primeng/focustrap';
 @NgModule({
   declarations: [
     MainSidebarComponent,
-    GlobalInputComponent,
     AddAgentComponent,
     DetailAgentComponent,
     AddServiceComponent
@@ -57,7 +55,6 @@ import { FocusTrapModule } from 'primeng/focustrap';
   ],
   exports: [
     MainSidebarComponent,
-    GlobalInputComponent,
     DetailAgentComponent,
     AddAgentComponent
   ],

@@ -33,12 +33,12 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-service>
-        <tr>
+        <tr [ngStyle]="isServiceAlreadyActive(service) ? {'background-color': 'rgb(173, 255, 47, 0.3)'} : {}">
             <td>{{ service.service }}</td>
             <td>{{ service.servicePath }}</td>
             <td>
-                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteService(service)"></button>
-                <button pButton pRipple icon="pi pi-arrow-right" class="p-button-rounded p-button-success" (click)="activateService(service)"></button>
+                <button [disabled]="isServiceAlreadyActive(service)" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteService(service)"></button>
+                <button [disabled]="isServiceAlreadyActive(service)" pButton pRipple icon="pi pi-arrow-right" class="p-button-rounded p-button-success" (click)="activateService(service)"></button>
             </td>
         </tr>
     </ng-template>
@@ -46,4 +46,6 @@
         <div class="flex align-items-center justify-content-between">In total there are {{ agent && agent.services ? agent.services.length : 0 }} services.</div>
     </ng-template>
 </p-table>
-    
+<div class="card flex justify-content-center gap-2">
+    <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+</div>
