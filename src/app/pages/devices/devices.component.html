@@ -1,7 +1,52 @@
 <app-main-sidebar></app-main-sidebar>
 
+<div *ngIf="devices && devices.devices" class="flex gap-2 mt-5 w-full">
+    <p-fieldset legend="List" class="flex-grow-1">
+        <p-table *ngIf="devices.devices" [value]="devices.devices" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>device_id</th>
+                    <th>apikey</th>
+                    <th>service</th>
+                    <th>service_path</th>
+                    <th>entity_type</th>
+                    <th>entity_name</th>
+                    <th>endpoint</th>
+                    <th>attributes</th>
+                    <th>lazy</th>
+                    <th>commands</th>
+                    <th>static_attributes</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td>{{ item.device_id }}</td>
+                    <td>{{ item.apikey }}</td>
+                    <td>{{ item.service }}</td>
+                    <td>{{ item.service_path }}</td>
+                    <td>{{ item.entity_type }}</td>
+                    <td>{{ item.entity_name }}</td>
+                    <td>{{ item.endpoint }}</td>
+                    <td>
+                        <p-tag [value]="item.attributes?.length" class="cursor-pointer" (click)="onOpenAttributes(item)"></p-tag>
+                    </td>
+                    <td>
+                        <p-tag [value]="item.lazy?.length" class="cursor-pointer" (click)="onOpenLazy(item)"></p-tag>
+                    </td>
+                    <td>
+                        <p-tag [value]="item.commands?.length" class="cursor-pointer" (click)="onOpenCommands(item)"></p-tag>
+                    </td>
+                    <td>
+                        <p-tag [value]="item.static_attributes?.length" class="cursor-pointer" (click)="onOpenStaticAttributes(item)"></p-tag>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-fieldset>
+</div>
+
 <div *ngIf="devices" class="flex gap-2 mt-5 w-full">
-    <p-fieldset legend="Devices" class="flex-grow-1">
+    <p-fieldset legend="JSON" class="flex-grow-1">
         <div *ngIf="devices">
             <p-splitter [style]="{ width: '100%' }" styleClass="mb-5">
                 <ng-template pTemplate>

@@ -25,6 +25,9 @@ export class MainSidebarComponent {
       label: 'Agent list', icon: 'pi pi-list', routerLink: '/agent-list'
     },
     {
+      label: 'Config groups', icon: 'pi pi-inbox', routerLink: '/config-groups'
+    },
+    {
       label: 'Devices', icon: 'pi pi-tablet', routerLink: '/devices'
     }
   ];
@@ -67,9 +70,11 @@ export class MainSidebarComponent {
   }
 
   onMenuClick(elem: any) {
-    this.activeElem = elem;
-    this.router.navigate([`/${elem}`]);
-    this.sidebarVisible = false;
+    if(this.isMenuItemEnabled(elem)) {
+      this.activeElem = elem;
+      this.router.navigate([`/${elem}`]);
+      this.sidebarVisible = false;
+    }
   }
 
   isActive(elem: any) {
@@ -95,6 +100,15 @@ export class MainSidebarComponent {
     });
   }
 
-  
+  isMenuItemEnabled(elem: any){
+    if(elem.includes('/agent-list') || (!elem.includes('/agent-list') && this.isAgentSelected())) {
+      return true;
+    }
+    return false;
+  }
+
+  isAgentSelected(){
+    return this.sessionService.getActiveAgent()
+  }
 
 }

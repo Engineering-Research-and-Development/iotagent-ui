@@ -21,7 +21,7 @@
     <ul class="menu-container">
         <li *ngFor="let item of menuItems"
             (click)="onMenuClick(item.routerLink)"
-            [ngClass]="isActive(item.routerLink) ? 'active' : ''"
+            [ngClass]="{'active': isActive(item.routerLink), 'disabled': !isMenuItemEnabled(item.routerLink)}"
         >
             <i [class]="'pi ' + item.icon"></i> 
             {{item.label}}

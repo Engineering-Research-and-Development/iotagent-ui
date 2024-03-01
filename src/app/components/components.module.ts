@@ -23,13 +23,15 @@ import { AddServiceComponent } from './add-service/add-service.component';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FocusTrapModule } from 'primeng/focustrap';
+import { AttributesComponent } from './attributes/attributes.component';
 
 @NgModule({
   declarations: [
     MainSidebarComponent,
     AddAgentComponent,
     DetailAgentComponent,
-    AddServiceComponent
+    AddServiceComponent,
+    AttributesComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +53,8 @@ import { FocusTrapModule } from 'primeng/focustrap';
     DropdownModule,
     ImageModule,
     DialogModule,
-    FocusTrapModule
+    FocusTrapModule,
+    TableModule
   ],
   exports: [
     MainSidebarComponent,

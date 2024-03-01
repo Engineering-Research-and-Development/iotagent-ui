@@ -10,6 +10,7 @@ import { JsonPipe } from '@angular/common';
 import { DevicesModule } from './pages/devices/devices.module';
 import { AgentListModule } from './pages/agent-list/agent-list/agent-list.module';
 import { MessageService } from 'primeng/api';
+import { ConfigGroupsModule } from './pages/config-groups/config-groups.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { MessageService } from 'primeng/api';
     AppRoutingModule,
     AgentListModule,
     DevicesModule,
+    ConfigGroupsModule,
     ToastModule
   ],
   providers: [

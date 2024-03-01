@@ -12,5 +12,8 @@
         &:hover {
             background-color: aliceblue;
         }
+        &.disabled {
+            opacity: 0.5;
+        }
     }
 }

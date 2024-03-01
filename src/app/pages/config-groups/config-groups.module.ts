@@ -1,20 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ConfigGroupsComponent } from './config-groups.component';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
 import { FieldsetModule } from 'primeng/fieldset';
 import { SplitterModule } from 'primeng/splitter';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
-import { DevicesComponent } from './devices.component';
 import { TableModule } from 'primeng/table';
-import { TagModule } from 'primeng/tag';
 
 @NgModule({
   declarations: [
-    DevicesComponent
+    ConfigGroupsComponent
   ],
   imports: [
     CommonModule,
@@ -24,8 +21,7 @@ import { TagModule } from 'primeng/tag';
     FieldsetModule,
     SplitterModule,
     NgxJsonViewerModule,
-    TableModule,
-    TagModule
+    TableModule
   ]
 })
-export class DevicesModule { }
+export class ConfigGroupsModule { }
