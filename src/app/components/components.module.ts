@@ -24,6 +24,8 @@ import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FocusTrapModule } from 'primeng/focustrap';
 import { AttributesComponent } from './attributes/attributes.component';
+import { AddDeviceComponent } from './add-device/add-device.component';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { AttributesComponent } from './attributes/attributes.component';
     AddAgentComponent,
     DetailAgentComponent,
     AddServiceComponent,
-    AttributesComponent
+    AttributesComponent,
+    AddDeviceComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +57,7 @@ import { AttributesComponent } from './attributes/attributes.component';
     ImageModule,
     DialogModule,
     FocusTrapModule,
-    TableModule
+    InputTextareaModule
   ],
   exports: [
     MainSidebarComponent,

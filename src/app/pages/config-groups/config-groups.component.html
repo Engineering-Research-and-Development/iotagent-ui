@@ -25,7 +25,7 @@
     </p-fieldset>
 </div>
 
-<div *ngIf="configGroups" class="flex gap-2 mt-5 w-full">
+<div *ngIf="configGroups && configGroups.services" class="flex gap-2 mt-5 w-full">
     <p-fieldset legend="JSON" class="flex-grow-1">
         <div *ngIf="configGroups">
             <p-splitter [style]="{ width: '100%' }" styleClass="mb-5">
