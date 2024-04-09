@@ -4,6 +4,14 @@
 @import "primeflex/primeflex.css";
 @import "primeicons/primeicons.css";
 
+* {
+    font-size: .95rem;
+}
+
+:root {
+    font-size: .95rem;
+}
+
 body {
     background: #eee;
 }

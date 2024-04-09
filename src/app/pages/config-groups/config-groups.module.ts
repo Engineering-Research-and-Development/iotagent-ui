@@ -8,6 +8,8 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { SplitterModule } from 'primeng/splitter';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { TableModule } from 'primeng/table';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { TableModule } from 'primeng/table';
     FieldsetModule,
     SplitterModule,
     NgxJsonViewerModule,
-    TableModule
+    TableModule,
+    ToolbarModule,
+    ConfirmDialogModule
   ]
 })
 export class ConfigGroupsModule { }

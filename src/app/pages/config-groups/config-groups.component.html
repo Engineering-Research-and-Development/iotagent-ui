@@ -2,6 +2,11 @@
 
 <div *ngIf="configGroups && configGroups.services" class="flex gap-2 mt-5 w-full">
     <p-fieldset legend="List" class="flex-grow-1">
+        <p-toolbar styleClass="mb-4">
+            <ng-template pTemplate="left">
+                <button pButton pRipple label="Add config group" icon="pi pi-plus" class="p-button-success mr-2" (click)="onAddConfigGroup()"></button>
+            </ng-template>
+        </p-toolbar>
         <p-table *ngIf="configGroups.services" [value]="configGroups.services" [tableStyle]="{ 'min-width': '50rem' }">
             <ng-template pTemplate="header">
                 <tr>
@@ -10,6 +15,7 @@
                     <th>service</th>
                     <th>subservice</th>
                     <th>entity_type</th>
+                    <th></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item>
@@ -19,6 +25,10 @@
                     <td>{{ item.service }}</td>
                     <td>{{ item.subservice }}</td>
                     <td>{{ item.entity_type }}</td>
+                    <td>
+                        <button pButton pRipple icon="pi pi-file-edit" class="p-button-rounded p-button-success" (click)="editConfigGroup(item)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteConfigGroup(item)"></button>
+                    </td>
                 </tr>
             </ng-template>
         </p-table>
@@ -42,4 +52,8 @@
             </p-splitter>   
         </div>
     </p-fieldset>
+</div>
+
+<div class="card flex justify-content-center gap-2">
+    <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 </div>

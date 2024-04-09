@@ -26,6 +26,7 @@ import { FocusTrapModule } from 'primeng/focustrap';
 import { AttributesComponent } from './attributes/attributes.component';
 import { AddDeviceComponent } from './add-device/add-device.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { AddConfigGroupComponent } from './add-config-group/add-config-group.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     DetailAgentComponent,
     AddServiceComponent,
     AttributesComponent,
-    AddDeviceComponent
+    AddDeviceComponent,
+    AddConfigGroupComponent
   ],
   imports: [
     CommonModule,
