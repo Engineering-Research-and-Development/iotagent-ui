@@ -6,8 +6,7 @@ const localStrategy = require('passport-local').Strategy;
 const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 
-const models = require('../models/').models
-const UserModel = models.User
+const User = require('../models/User')
 
 passport.use('register', new localStrategy(
   {
@@ -21,7 +20,7 @@ passport.use('register', new localStrategy(
         username : username,
         password: password
       }
-      const user = await UserModel.create(user_payload);
+      const user = await new User(user_payload);
       return callback(null, user, "Registration Successful");
 
     } catch (error) {
@@ -38,13 +37,13 @@ passport.use('login', new localStrategy(
   },
   async (username, password, done) => {
     try {
-      const user = await UserModel.findOne({where : { username: username } });
+      const user = await User.findOne({username: username });
 
       if (!user) {
         return done(null, false, "User not found");
       }
 
-      const validate = await user.isValidPassword(password);
+      const validate = await user.comparePassword(password);
 
       if (!validate) {
         return done(null, false, "Wrong Password" );

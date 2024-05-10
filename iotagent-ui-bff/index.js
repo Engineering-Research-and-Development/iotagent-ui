@@ -1,18 +1,19 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const morgan = require("morgan");
+const cors = require("cors");
 const errorhandler = require('errorhandler');
 const mongoose = require('mongoose');
 
 const config = require("./config")
 
-var isProduction = config.stage;
+const isProduction = config.stage == "production";
 
 const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(morgan('combined'))
-
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(morgan('combined'));
+app.use(cors());
+app.disable('etag');
 
 mongoose.connect(`mongodb://${config.mongo_host}:${config.mongo_port}/${config.mongo_db}`)
 
