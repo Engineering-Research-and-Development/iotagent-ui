@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { SessionService } from 'src/app/services/session/session.service';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-add-agent',
@@ -63,7 +63,7 @@ export class AddAgentComponent implements OnInit {
   loading: boolean = false;
 
   constructor(private messageService: MessageService,
-    private sessionService: SessionService,
+    private apiService: ApiService,
     private dialogConfig: DynamicDialogConfig) {
       
     }
@@ -99,9 +99,9 @@ export class AddAgentComponent implements OnInit {
       };
       let error: any = null;
       if(this.dialogConfig.data.objectToEdit) {
-        error = this.sessionService.editAgent(agent);
+        error = this.apiService.updateAgent(agent);
       } else {
-        error = this.sessionService.addAgent(agent);
+        error = this.apiService.addAgent(agent);
       }
       this.form.reset();
       this.loading = false;

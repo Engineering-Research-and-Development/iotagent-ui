@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
 import { SessionService } from 'src/app/services/session/session.service';
+import { AgentService } from 'src/app/services/agent/agent.service';
 import Utils from 'src/app/utils';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddAgentComponent } from 'src/app/components/add-agent/add-agent.component';
 import { DetailAgentComponent } from 'src/app/components/detail-agent/detail-agent.component';
-import { ConfirmationService, ConfirmEventType } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-agent-list',
@@ -21,8 +22,8 @@ export class AgentListComponent implements OnInit {
   detailAgentDialogRef: DynamicDialogRef | undefined;
   pollingTimer: any;
 
-  constructor(private sessionService: SessionService,
-              private apiService: ApiService,
+  constructor(private apiService: ApiService,
+              private agentService: AgentService,
               private dialogService: DialogService,
               private confirmationService: ConfirmationService) {}
 
@@ -42,7 +43,7 @@ export class AgentListComponent implements OnInit {
   }
 
   testAgent(agent: any) {
-    this.apiService.testConnection(Utils.buildAgentBaseUrl(agent)).subscribe((result: any) => {
+    this.agentService.testConnection(Utils.buildAgentBaseUrl(agent)).subscribe((result: any) => {
       if(result) {
         agent.status = 'active';
       } else {
@@ -54,7 +55,7 @@ export class AgentListComponent implements OnInit {
   }
 
   getAgents() {
-    this.agents = this.sessionService.getAgents();
+    this.agents = this.apiService.getAllAgents();
     this.testAgents();
   }
 
@@ -71,7 +72,7 @@ export class AgentListComponent implements OnInit {
       header: 'Delete Agent',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.sessionService.deleteAgent(agent);
+        this.apiService.deleteAgent(agent.id);
         this.getAgents();
       },
       reject: () => {

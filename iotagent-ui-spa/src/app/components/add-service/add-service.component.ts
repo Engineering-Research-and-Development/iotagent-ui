@@ -1,8 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { SessionService } from 'src/app/services/session/session.service';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-add-service',
@@ -23,7 +23,7 @@ export class AddServiceComponent implements OnInit {
   loading: boolean = false;
 
   constructor(private messageService: MessageService,
-    private sessionService: SessionService,
+    private apiService: ApiService,
     private dialogConfig: DynamicDialogConfig) {
     }
 
@@ -42,16 +42,16 @@ export class AddServiceComponent implements OnInit {
       service: this.form.controls.service.value,
       servicePath: this.form.controls.servicePath.value
     };
-    const error = this.sessionService.addService(this.form.controls.agentId.value, service);
-    this.loading = false;
-    if (error) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: error?.error });
-      return;
-    }
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Service added correctly' });
-    this.dialogConfig.data.onClose();
-    this.form.controls.service.setValue(null);
-    this.form.controls.servicePath.setValue(null);
+    this.apiService.addService(this.form.controls.agentId.value, service).subscribe(data => {
+      this.loading = false;
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Service added correctly' });
+      this.dialogConfig.data.onClose();
+      this.form.controls.service.setValue(null);
+      this.form.controls.servicePath.setValue(null);
+    }, (err) => {
+      this.loading = false;
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: err?.error });
+    });
   }
 
   onCancel() {

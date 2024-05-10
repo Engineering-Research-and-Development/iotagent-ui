@@ -2,9 +2,10 @@ import { Component, ViewChild } from '@angular/core';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { SessionService } from 'src/app/services/session/session.service';
+import { ApiService } from 'src/app/services/api/api.service';
 import { AddServiceComponent } from '../add-service/add-service.component';
 import { MessageService } from 'primeng/api';
-import { ConfirmationService, ConfirmEventType } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-detail-agent',
@@ -19,18 +20,19 @@ export class DetailAgentComponent {
   agent: any;
 
   constructor(private sessionService: SessionService,
+    private apiService: ApiService,
     private dialogService: DialogService,
     private dialogConfig: DynamicDialogConfig,
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
-      this.agent = this.sessionService.getAgentById(this.dialogConfig.data.agentId);
+      this.agent = this.apiService.getAgent(this.dialogConfig.data.agentId);
       if(!this.agent.services) {
         this.agent.services = [];
       }
     }
   
   refreshAgent() {
-    const agent = this.sessionService.getAgentById(this.agent.id);
+    const agent = this.apiService.getAgent(this.agent.id);
     this.agent = agent;
   }
 
@@ -47,7 +49,7 @@ export class DetailAgentComponent {
       header: 'Delete Service',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.sessionService.deleteService(this.agent.id, service);
+        this.apiService.deleteService(this.agent.id, service);
         this.refreshAgent();
       },
       reject: () => {

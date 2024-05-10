@@ -3,9 +3,9 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddDeviceComponent } from 'src/app/components/add-device/add-device.component';
 import { AttributesComponent } from 'src/app/components/attributes/attributes.component';
-import { ApiService } from 'src/app/services/api/api.service';
 import { SessionService } from 'src/app/services/session/session.service';
 import { ConfirmationService } from 'primeng/api';
+import { AgentService } from 'src/app/services/agent/agent.service';
 
 @Component({
   selector: 'app-devices',
@@ -21,7 +21,7 @@ export class DevicesComponent {
   devices: any = null;
 
   constructor(private sessionService: SessionService,
-              private apiService: ApiService,
+              private agentService: AgentService,
               private messageService: MessageService,
               private dialogService: DialogService,
               private confirmationService: ConfirmationService) {
@@ -31,7 +31,7 @@ export class DevicesComponent {
   }
 
   getDevices() {
-    this.apiService.getDevices(null, null).subscribe((data: any) => {
+    this.agentService.getDevices(null, null).subscribe((data: any) => {
       this.devices = data;
       this.loading = false;
     }, (err: any) => {
@@ -98,7 +98,7 @@ export class DevicesComponent {
       header: 'Delete Device',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.apiService.removeDevice(device.device_id).subscribe(data => {
+        this.agentService.removeDevice(device.device_id).subscribe(data => {
           this.loading = false;
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Device removed correctly' });
           this.getDevices();

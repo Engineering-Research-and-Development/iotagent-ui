@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { ApiService } from 'src/app/services/api/api.service';
-import { SessionService } from 'src/app/services/session/session.service';
+import { AgentService } from 'src/app/services/agent/agent.service';
 
 @Component({
   selector: 'app-add-config-group',
@@ -22,7 +21,7 @@ export class AddConfigGroupComponent implements OnInit {
 
   constructor(private messageService: MessageService,
               private dialogConfig: DynamicDialogConfig,
-              private apiService: ApiService
+              private agentService: AgentService
   ) {
       
     }
@@ -63,7 +62,7 @@ export class AddConfigGroupComponent implements OnInit {
     }
 
     if(this.dialogConfig.data.objectToEdit) {
-      this.apiService.editConfigGroup(
+      this.agentService.editConfigGroup(
         this.dialogConfig.data.objectToEdit.resource,
         this.dialogConfig.data.objectToEdit.apikey,
         configGroup
@@ -77,7 +76,7 @@ export class AddConfigGroupComponent implements OnInit {
         this.dialogConfig.data.onClose();
       });
     } else {
-      this.apiService.createConfigGroup(configGroup).subscribe(data => {
+      this.agentService.createConfigGroup(configGroup).subscribe(data => {
         this.loading = false;
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'ConfigGroup added correctly' });
         this.dialogConfig.data.onClose();

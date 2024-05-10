@@ -3,6 +3,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddConfigGroupComponent } from 'src/app/components/add-config-group/add-config-group.component';
 import { ApiService } from 'src/app/services/api/api.service';
+import { AgentService } from 'src/app/services/agent/agent.service';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
@@ -18,6 +19,7 @@ export class ConfigGroupsComponent {
   loading = false;
 
   constructor(private apiService: ApiService,
+    private agentService: AgentService,
     private messageService: MessageService,
     private dialogService: DialogService,
     private confirmationService: ConfirmationService) {
@@ -26,7 +28,7 @@ export class ConfigGroupsComponent {
 
   getConfigGroups() {
     this.loading = true;
-    this.apiService.getConfigGroups().subscribe((data: any) => {
+    this.agentService.getConfigGroups().subscribe((data: any) => {
       this.configGroups = data;
       this.loading = false;
     }, (err: any) => {
@@ -54,7 +56,7 @@ export class ConfigGroupsComponent {
       header: 'Delete config group',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.apiService.removeConfigGroup(configGroup.resource, configGroup.apikey).subscribe(data => {
+        this.agentService.removeConfigGroup(configGroup.resource, configGroup.apikey).subscribe(data => {
           this.loading = false;
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'ConfigGroup removed correctly' });
           this.getConfigGroups();

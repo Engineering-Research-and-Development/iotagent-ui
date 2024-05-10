@@ -4,8 +4,8 @@
 
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { environment } from 'src/app/environment';
 import { SessionService } from '../session/session.service';
-import Utils from 'src/app/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -13,62 +13,43 @@ import Utils from 'src/app/utils';
 export class ApiService {
 
   constructor(private httpClient: HttpClient,
-    private sessionService: SessionService) { }
+  private sessionService: SessionService) { }
 
-  testConnection(endpoint: string): any {
-    return this.httpClient.get(`${endpoint}/version`);
+
+  // Agent CRUD
+
+  addAgent(agent: any) {
+    return this.httpClient.post(`${environment.API_BASE_URL}/agent`, agent);
+  }
+  
+  getAllAgents() {
+    return this.httpClient.get(`${environment.API_BASE_URL}/agent`);
   }
 
-  getAbout() {
-    return this.httpClient.get(`${Utils.buildAgentBaseUrl(this.sessionService.getActiveAgent())}/about`);
+  getAgent(idAgent: any) {
+    return this.httpClient.get(`${environment.API_BASE_URL}/agent/${idAgent}`);
   }
 
-  getVersion() {
-    return this.httpClient.get(`${Utils.buildAgentBaseUrl(this.sessionService.getActiveAgent())}/version`);
+  deleteAgent(idAgent: any) {
+    return this.httpClient.delete(`${environment.API_BASE_URL}/agent/${idAgent}`);
   }
 
-  getConfigGroups() {
-    return this.httpClient.get(`${Utils.buildAgentUrl(this.sessionService.getActiveAgent())}/services`);
+  updateAgent(agent: any) {
+    return this.httpClient.put(`${environment.API_BASE_URL}/agent/${agent.id}`, agent);
   }
 
-  createConfigGroup(body: any) {
-    return this.httpClient.post(`${Utils.buildAgentUrl(this.sessionService.getActiveAgent())}/services`, body);
+  // Service CRUD  
+
+  getAllServices(idAgent: any) {
+    return this.httpClient.get(`${environment.API_BASE_URL}/agent/${idAgent}/service`);
   }
 
-  editConfigGroup(resource: string, apikey: string, body: any) {
-    return this.httpClient.put(`${Utils.buildAgentUrl(this.sessionService.getActiveAgent())}/services?resource=${resource}&apikey=${apikey}`, body);
+  addService(idAgent: any, service: any) {
+    return this.httpClient.post(`${environment.API_BASE_URL}/agent/${idAgent}/service`, service);
   }
 
-  removeConfigGroup(resource: string, apikey: string) {
-    return this.httpClient.delete(`${Utils.buildAgentUrl(this.sessionService.getActiveAgent())}/services?resource=${resource}&apikey=${apikey}`);
-  }
-
-  getDevices(limit: number | null, offset: number | null) {
-    let url = `${Utils.buildAgentUrl(this.sessionService.getActiveAgent())}/devices`;
-    if(limit !== null && offset !== null) {
-      url += `?limit=${limit}&offset=${offset}`;
-    }
-    return this.httpClient.get(url);
-  }
-
-  createDevice(body: any) {
-    return this.httpClient.post(`${Utils.buildAgentUrl(this.sessionService.getActiveAgent())}/devices`, body);
-  }
-
-  getDeviceDetails(deviceId: string) {
-    return this.httpClient.get(`${Utils.buildAgentUrl(this.sessionService.getActiveAgent())}/devices/${deviceId}`);
-  }
-
-  editDevice(deviceId: string, body: any) {
-    return this.httpClient.put(`${Utils.buildAgentUrl(this.sessionService.getActiveAgent())}/devices/${deviceId}`, body);
-  }
-
-  removeDevice(deviceId: string) {
-    return this.httpClient.delete(`${Utils.buildAgentUrl(this.sessionService.getActiveAgent())}/devices/${deviceId}`);
-  }
-
-  batchRemoveDevices(body: any) {
-    return this.httpClient.post(`${Utils.buildAgentUrl(this.sessionService.getActiveAgent())}/op/delete`, body);
+  deleteService(idAgent: any, idService: any) {
+    return this.httpClient.delete(`${environment.API_BASE_URL}/agent/${idAgent}/service/${idService}`);
   }
 
 }

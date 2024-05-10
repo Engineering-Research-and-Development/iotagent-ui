@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ApiService } from 'src/app/services/api/api.service';
-import { SessionService } from 'src/app/services/session/session.service';
+import { AgentService } from 'src/app/services/agent/agent.service';
 
 @Component({
   selector: 'app-add-device',
@@ -22,7 +22,7 @@ export class AddDeviceComponent implements OnInit {
   loading: boolean = false;
 
   constructor(private messageService: MessageService,
-              private sessionService: SessionService,
+              private agentService: AgentService,
               private dialogConfig: DynamicDialogConfig,
               private apiService: ApiService
   ) {
@@ -63,7 +63,7 @@ export class AddDeviceComponent implements OnInit {
     }
 
     if(this.dialogConfig.data.objectToEdit) {
-      this.apiService.editDevice(this.dialogConfig.data.objectToEdit.device_id, device).subscribe(data => {
+      this.agentService.editDevice(this.dialogConfig.data.objectToEdit.device_id, device).subscribe(data => {
         this.loading = false;
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Device updated correctly' });
         this.dialogConfig.data.onClose();
@@ -73,7 +73,7 @@ export class AddDeviceComponent implements OnInit {
         this.dialogConfig.data.onClose();
       });
     } else {
-      this.apiService.createDevice(device).subscribe(data => {
+      this.agentService.createDevice(device).subscribe(data => {
         this.loading = false;
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Device added correctly' });
         this.dialogConfig.data.onClose();
