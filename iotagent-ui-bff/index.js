@@ -25,7 +25,11 @@ mongoose.connection.on('error',(err) => {
   console.log("MongoDB Connection Fail",err);
 });
 
-app.use('/api', require('./routes'));
+if (!isProduction) {
+  app.use("/api",require('./routes'));
+}else{
+  app.use(require('./routes'));
+}
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;

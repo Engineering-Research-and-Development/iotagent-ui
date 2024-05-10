@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 
 const config = require("../../config")
 
-
 router.post('/register', async (req, res, next) => {
     passport.authenticate('register', { session: false }, async (err, user, info) => {
         if (err) {
