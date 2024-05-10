@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "iotagent-ui": {
+    "iotagent-ui-spa": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/iotagent-ui",
+            "outputPath": "dist/iotagent-ui-spa",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "iotagent-ui:build:production"
+              "browserTarget": "iotagent-ui-spa:build:production"
             },
             "development": {
-              "browserTarget": "iotagent-ui:build:development"
+              "browserTarget": "iotagent-ui-spa:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "iotagent-ui:build"
+            "browserTarget": "iotagent-ui-spa:build"
           }
         },
         "test": {

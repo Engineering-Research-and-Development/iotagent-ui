@@ -1,5 +1,5 @@
 {
-  "name": "iotagent-ui",
+  "name": "iotagent-ui-spa",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
