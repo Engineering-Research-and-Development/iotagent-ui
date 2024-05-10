@@ -17,12 +17,12 @@ app.disable('etag');
 
 mongoose.connect(`mongodb://${config.mongo_host}:${config.mongo_port}/${config.mongo_db}`)
 
-mongoose.connection.on('open',()=>{
-  console.log("Connection OK");
+mongoose.connection.on('open',() => {
+  console.log("MongoDB Connection OK");
 });
 
-mongoose.connection.on('error',(err)=>{
-  console.log("Connection Fail",err);
+mongoose.connection.on('error',(err) => {
+  console.log("MongoDB Connection Fail",err);
 });
 
 app.use('/api', require('./routes'));
