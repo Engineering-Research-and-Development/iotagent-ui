@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const ServiceSchema = require('./Service');
 
 const AgentSchema = new Schema({
-    id: {
+    _id: {
         type: Schema.Types.UUID,
         required: true,
         unique: true
@@ -28,9 +28,7 @@ const AgentSchema = new Schema({
         type: Schema.Types.String,
         required: true
     },
-    services: [{
-        type: ServiceSchema
-    }]
+    services: [ServiceSchema]
 });
 
 module.exports = mongoose.model('agent', AgentSchema);

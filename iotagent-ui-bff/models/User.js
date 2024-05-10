@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const SALT_WORK_FACTOR = 10;
 
 const UserSchema = new Schema({
-    user_id: {
+    _id: {
         type: Schema.Types.UUID,
         required: true,
         unique: true

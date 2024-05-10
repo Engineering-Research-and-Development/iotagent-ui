@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ServiceSchema = new Schema({
-    id: {
+    _id: {
         type: Schema.Types.UUID,
         required: true,
         unique: true
