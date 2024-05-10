@@ -6,7 +6,7 @@ const localStrategy = require('passport-local').Strategy;
 const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 
-const UserModel = require('../models/User');
+const User = require('../models/User');
 
 passport.use('register', new localStrategy(
   {
@@ -21,6 +21,8 @@ passport.use('register', new localStrategy(
         password: password
       }
       const user = await new User(user_payload);
+      await user.save();
+
       return callback(null, user, "Registration Successful");
 
     } catch (error) {

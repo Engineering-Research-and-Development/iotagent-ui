@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const ServiceSchema = new Schema({
     _id: {
-        type: Schema.Types.UUID
+        type: Schema.Types.ObjectId,
+        auto: true
     },
     service: {
         type: Schema.Types.String,

@@ -5,7 +5,8 @@ const SALT_WORK_FACTOR = 10;
 
 const UserSchema = new Schema({
     _id: {
-        type: Schema.Types.UUID
+        type: Schema.Types.ObjectId,
+        auto: true
     },
     username: {
         type: Schema.Types.String,
@@ -38,10 +39,8 @@ UserSchema.pre('save', function(next) {
     });
 });
      
-UserSchema.methods.comparePassword = function(candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-        if (err) return cb(err);
-        cb(null, isMatch);
-    });
+UserSchema.methods.comparePassword = async function comparePassword(candidatePassword) {
+    return bcrypt.compare(candidatePassword, this.password);
 };
+
 module.exports = mongoose.model('user', UserSchema);

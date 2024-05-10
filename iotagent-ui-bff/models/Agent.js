@@ -4,7 +4,8 @@ const ServiceSchema = require('./Service');
 
 const AgentSchema = new Schema({
     _id: {
-        type: Schema.Types.UUID
+        type: Schema.Types.ObjectId,
+        auto: true
     },
     type: {
         type: Schema.Types.String,
