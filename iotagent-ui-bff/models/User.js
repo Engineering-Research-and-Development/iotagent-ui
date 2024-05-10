@@ -5,17 +5,17 @@ const SALT_WORK_FACTOR = 10;
 
 const UserSchema = new Schema({
     user_id: {
-        type: UUID,
+        type: Schema.Types.UUID,
         required: true,
         unique: true
     },
     username: {
-        type: String,
+        type: Schema.Types.String,
         required: true,
         unique: true
     },
     password: {
-        type:String,
+        type: Schema.Types.String,
         required: true
     }
 });
