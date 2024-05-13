@@ -12,41 +12,39 @@ export class AgentService {
     private sessionService: SessionService
   ) { }
 
+  buildProxyPath() {
+    const idAgent = this.sessionService.getActiveAgent()._id;
+    const idService = this.sessionService.getActiveService()._id;
+    return `${environment.API_BASE_URL}/auth/agent/${idAgent}/service/${idService}/proxy`;
+  }
+
   testConnection(endpoint: string): any {
-    return this.httpClient.get(`${endpoint}/version`);
+    const idAgent = this.sessionService.getActiveAgent()._id;
+    return this.httpClient.get(`${environment.API_BASE_URL}/auth/agent/${idAgent}/proxy/version`);
   }
 
   getAbout() {
-    return this.httpClient.get(`${environment.API_BASE_URL}/auth/proxy/about`);
-  }
-
-  getVersion() {
-    return this.httpClient.get(`${environment.API_BASE_URL}/auth/proxy/version`);
+    const idAgent = this.sessionService.getActiveAgent()._id;
+    return this.httpClient.get(`${environment.API_BASE_URL}/auth/agent/${idAgent}/proxy/about`);
   }
 
   getConfigGroups() {
-    const idAgent = this.sessionService.getActiveAgent()._id;
-    const idService = this.sessionService.getActiveService()._id;
-    return this.httpClient.get(`${environment.API_BASE_URL}/auth/agent/${idAgent}/service/${idService}/proxy/services`);
+    return this.httpClient.get(`${this.buildProxyPath()}/services`);
   }
 
   createConfigGroup(body: any) {
-    return this.httpClient.post(`${environment.API_BASE_URL}/auth/proxy/services`, body);
+    return this.httpClient.post(`${this.buildProxyPath()}/services`, body);
   }
 
   editConfigGroup(resource: string, apikey: string, body: any) {
-    return this.httpClient.put(`${environment.API_BASE_URL}/auth/proxy/services?resource=${resource}&apikey=${apikey}`, body);
+    return this.httpClient.put(`${this.buildProxyPath()}/services?resource=${resource}&apikey=${apikey}`, body);
   }
 
   removeConfigGroup(resource: string, apikey: string) {
-    return this.httpClient.delete(`${environment.API_BASE_URL}/auth/proxy/services?resource=${resource}&apikey=${apikey}`);
+    return this.httpClient.delete(`${this.buildProxyPath()}/services?resource=${resource}&apikey=${apikey}`);
   }
 
-  getDevices(limit: number | null, offset: number | null) {
-    const idAgent = this.sessionService.getActiveAgent()._id;
-    const idService = this.sessionService.getActiveService()._id;
-
-    let url = `${environment.API_BASE_URL}/auth/agent/${idAgent}/service/${idService}/proxy/devices`;
+  getDevices(limit: number | null, offset: number | null) {let url = `${this.buildProxyPath()}/devices`;
     if(limit !== null && offset !== null) {
       url += `?limit=${limit}&offset=${offset}`;
     }
@@ -54,25 +52,23 @@ export class AgentService {
   }
 
   createDevice(body: any) {
-    const idAgent = this.sessionService.getActiveAgent()._id;
-    const idService = this.sessionService.getActiveService()._id;
-    return this.httpClient.post(`${environment.API_BASE_URL}/auth/agent/${idAgent}/service/${idService}/proxy/devices`, body);
+    return this.httpClient.post(`${this.buildProxyPath()}/devices`, body);
   }
 
   getDeviceDetails(deviceId: string) {
-    return this.httpClient.get(`${environment.API_BASE_URL}/auth/proxy/devices/${deviceId}`);
+    return this.httpClient.get(`${this.buildProxyPath()}/devices/${deviceId}`);
   }
 
   editDevice(deviceId: string, body: any) {
-    return this.httpClient.put(`${environment.API_BASE_URL}/auth/proxy/devices/${deviceId}`, body);
+    return this.httpClient.put(`${this.buildProxyPath()}/devices/${deviceId}`, body);
   }
 
   removeDevice(deviceId: string) {
-    return this.httpClient.delete(`${environment.API_BASE_URL}/auth/proxy/devices/${deviceId}`);
+    return this.httpClient.delete(`${this.buildProxyPath()}/devices/${deviceId}`);
   }
 
   batchRemoveDevices(body: any) {
-    return this.httpClient.post(`${environment.API_BASE_URL}/auth/proxy/op/delete`, body);
+    return this.httpClient.post(`${this.buildProxyPath()}/op/delete`, body);
   }
 
 }
