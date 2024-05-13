@@ -1,6 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const Agent = require('../../models/Agent');
+const fetch = require("node-fetch");
+
+router.all('/agent/:idAgent/service/:idService/proxy/**', async function(req,res,next){
+    const agent = await Agent.findOne({_id: req.params.idAgent});
+    const service = agent.services.find(e => e._id.toString() === req.params.idService);
+    const forwardUrl = `http://${agent.host}:${agent.port}/${agent.apiKey}/${req.originalUrl.split('/proxy/')[1]}`;
+    const headers = {
+        'fiware-service': service.service,
+        'fiware-servicepath': service.servicePath
+    };
+    console.log(req.body)
+    const result = await fetch(forwardUrl, {
+        method: req.method,
+        body: req.method !== 'GET' && req.method !== 'HEAD' ? req.body : null,
+        headers
+    });
+    res.status(result.status).json(await result.json());
+});
 
 router.get('/agent', async function(req,res,next){
     const result = await Agent.find({});

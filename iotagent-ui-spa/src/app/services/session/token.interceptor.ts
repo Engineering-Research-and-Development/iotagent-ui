@@ -14,16 +14,14 @@ export class TokenInterceptor implements HttpInterceptor {
     constructor(public sessionService: SessionService) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (request.url.includes('/version')) {
+        if (request.url.includes('/login')) {
             return next.handle(request);
-        }
-        if(this.sessionService.getActiveService()) {
-            request = request.clone({
-                setHeaders: {
-                    "fiware-service": this.sessionService.getActiveService().service,
-                    "fiware-servicepath": this.sessionService.getActiveService().servicePath
-                }
-            });
+        } else {
+            // request = request.clone({
+                //         setHeaders: {
+                //             "Bearer ": this.sessionService.getLoggedUser().auth_token,
+                //         }
+                //     });
         }
         return next.handle(request);
     }
