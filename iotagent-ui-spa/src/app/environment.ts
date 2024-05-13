@@ -1,3 +1,3 @@
 export const environment = {
-    API_BASE_URL: 'http://localhost:9000/api/v1'
+    API_BASE_URL: 'http://BFF_API_HOST:BFF_API_PORT/api/v1'
 }
