@@ -5,10 +5,9 @@ const errorhandler = require('errorhandler');
 const mongoose = require('mongoose');
 
 const config = require("./config")
+const seed = require("./seed")
 
 const isProduction = config.stage == "production";
-
-const User = require("./models/User");
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -21,6 +20,10 @@ mongoose.connect(`mongodb://${config.mongo_host}:${config.mongo_port}/${config.m
 
 mongoose.connection.on('open',() => {
   console.log("MongoDB Connection OK");
+  if(config.admin_account){
+    console.log("Default admin account created");
+    seed.createAdmin();
+  }
 });
 
 mongoose.connection.on('error',(err) => {
@@ -52,12 +55,6 @@ app.use(function(err, req, res, next) {
       }
     });
 });
-
-const admin = await new User({
-  username: "admin",
-  password: "admin"
-})
-await admin.save();
 
 process.on('uncaughtException', function(err) {
   console.error(err);
