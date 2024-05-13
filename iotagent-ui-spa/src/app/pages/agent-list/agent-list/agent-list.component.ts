@@ -55,8 +55,13 @@ export class AgentListComponent implements OnInit {
   }
 
   getAgents() {
-    this.agents = this.apiService.getAllAgents();
-    this.testAgents();
+    this.apiService.getAllAgents().subscribe((data) => {
+      this.agents = data;
+      this.testAgents();
+    }, err => {
+
+    })
+    
   }
 
   onAddAgent() {
@@ -72,8 +77,9 @@ export class AgentListComponent implements OnInit {
       header: 'Delete Agent',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.apiService.deleteAgent(agent.id);
-        this.getAgents();
+        this.apiService.deleteAgent(agent._id).subscribe(data => {
+          this.getAgents();
+        });
       },
       reject: () => {
           return;

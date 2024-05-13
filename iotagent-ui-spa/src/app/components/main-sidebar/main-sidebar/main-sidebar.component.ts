@@ -18,6 +18,8 @@ export class MainSidebarComponent {
   activeAgent: any = null;
   activeService: any = null;
 
+  user: any;
+
   utils = Utils;
 
   menuItems = [
@@ -38,6 +40,7 @@ export class MainSidebarComponent {
   constructor(private router: Router,
               private confirmationService: ConfirmationService,
               private sessionService: SessionService) {
+    this.user = sessionService.getLoggedUser();
     this.activeElem = this.router.url;
     const menuItemIndex = this.menuItems.findIndex(item => item.routerLink === this.activeElem);
     this.breadItems = [
@@ -81,18 +84,37 @@ export class MainSidebarComponent {
     return elem === this.activeElem;
   }
 
-  logout() {
+  logoutAgent() {
     this.sessionService.deleteSession();
     this.router.navigate(['/']);
   }
 
-  onLogout() {
+  logoutUser() {
+    this.sessionService.deleteUserSession();
+    this.router.navigate(['/login']);
+  }
+
+  onAgentLogout() {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Disconnect',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-          this.logout();
+          this.logoutAgent();
+      },
+      reject: () => {
+          return;
+      }
+    });
+  }
+
+  onUserLogout() {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Disconnect',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+          this.logoutUser();
       },
       reject: () => {
           return;

@@ -1,6 +1,9 @@
 <p-sidebar [(visible)]="sidebarVisible">
     <img src="assets/fiware-logo.png" class="w-4"/>
     <h3 class="mt-1">IoT Agent UI</h3>
+    <p *ngIf="user">Logged as <b>{{user.username}}</b></p>
+    <a *ngIf="user" href="javascript:void(0)" (click)="onUserLogout()"><i class="pi pi-sign-out pr-2"></i>Logout</a>
+    <br><br><hr><br><br>
     <div *ngIf="activeAgent && activeService">
         <h5 class="m-0">Selected agent</h5>
         <p class="m-0">{{utils.agentTypesMap[activeAgent.type]}}</p>
@@ -14,7 +17,7 @@
         <h5>No Selected agent</h5>
     </div>
     <br>
-    <a *ngIf="activeAgent && activeService" href="javascript:void(0)" (click)="onLogout()"><i class="pi pi-sign-out pr-2"></i>Disconnect</a>
+    <a *ngIf="activeAgent && activeService" href="javascript:void(0)" (click)="onAgentLogout()"><i class="pi pi-sign-out pr-2"></i>Disconnect agent</a>
     <div *ngIf="activeAgent && activeService">
         <br><br><hr>
     </div>

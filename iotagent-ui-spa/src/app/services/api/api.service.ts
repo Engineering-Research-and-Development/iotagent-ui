@@ -19,37 +19,37 @@ export class ApiService {
   // Agent CRUD
 
   addAgent(agent: any) {
-    return this.httpClient.post(`${environment.API_BASE_URL}/agent`, agent);
+    return this.httpClient.post(`${environment.API_BASE_URL}/auth/agent`, agent);
   }
   
   getAllAgents() {
-    return this.httpClient.get(`${environment.API_BASE_URL}/agent`);
+    return this.httpClient.get(`${environment.API_BASE_URL}/auth/agent`);
   }
 
   getAgent(idAgent: any) {
-    return this.httpClient.get(`${environment.API_BASE_URL}/agent/${idAgent}`);
+    return this.httpClient.get(`${environment.API_BASE_URL}/auth/agent/${idAgent}`);
   }
 
   deleteAgent(idAgent: any) {
-    return this.httpClient.delete(`${environment.API_BASE_URL}/agent/${idAgent}`);
+    return this.httpClient.delete(`${environment.API_BASE_URL}/auth/agent/${idAgent}`);
   }
 
   updateAgent(agent: any) {
-    return this.httpClient.put(`${environment.API_BASE_URL}/agent/${agent.id}`, agent);
+    return this.httpClient.put(`${environment.API_BASE_URL}/auth/agent/${agent._id}`, agent);
   }
 
   // Service CRUD  
 
   getAllServices(idAgent: any) {
-    return this.httpClient.get(`${environment.API_BASE_URL}/agent/${idAgent}/service`);
+    return this.httpClient.get(`${environment.API_BASE_URL}/auth/agent/${idAgent}/service`);
   }
 
   addService(idAgent: any, service: any) {
-    return this.httpClient.post(`${environment.API_BASE_URL}/agent/${idAgent}/service`, service);
+    return this.httpClient.post(`${environment.API_BASE_URL}/auth/agent/${idAgent}/service`, service);
   }
 
   deleteService(idAgent: any, idService: any) {
-    return this.httpClient.delete(`${environment.API_BASE_URL}/agent/${idAgent}/service/${idService}`);
+    return this.httpClient.delete(`${environment.API_BASE_URL}/auth/agent/${idAgent}/service/${idService}`);
   }
 
 }

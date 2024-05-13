@@ -1,28 +1,31 @@
 const express = require('express');
 const router = express.Router();
+const Agent = require('../../models/Agent');
 
-router.get('/secret',function(req,res,next){
-    res.status(200).json({message:"Secure Path reached!"});
+router.get('/agent', async function(req,res,next){
+    const result = await Agent.find({});
+    res.status(200).json(result);
 });
 
-router.get('/agent',function(req,res,next){
-    res.status(200).json({message:"GET /agent reached!"});
+router.post('/agent', async function(req,res,next){
+    const agent = await new Agent(req.body);
+    await agent.save();
+    res.status(201).json(agent);
 });
 
-router.post('/agent',function(req,res,next){
-    res.status(200).json({message:"POST /agent reached!"});
+router.get('/agent/:idAgent', async function(req,res,next){
+    const result = await Agent.find({_id: req.params.idAgent});
+    res.status(200).json(result);
 });
 
-router.get('/agent/:idAgent',function(req,res,next){
-    res.status(200).json({message:"GET /agent reached!"});
+router.put('/agent/:idAgent', async function(req,res,next){
+    const agent = await Agent.findOneAndUpdate({_id: req.params.idAgent}, req.body, {new: false, upsert: true});
+    res.status(200).json(agent);
 });
 
-router.put('/agent/:idAgent',function(req,res,next){
-    res.status(200).json({message:"PUT /agent reached!"});
-});
-
-router.delete('/agent/:idAgent',function(req,res,next){
-    res.status(200).json({message:"DELETE /agent reached!"});
+router.delete('/agent/:idAgent', async function(req,res,next){
+    await Agent.deleteOne({_id: req.params.idAgent});
+    res.status(204).json({});
 });
 
 module.exports = router;

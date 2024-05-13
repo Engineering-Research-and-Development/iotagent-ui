@@ -1,6 +1,6 @@
 <p-card>
     <form [formGroup]="form" class="flex flex-column">
-      <input type="hidden" formControlName="id">
+      <input type="hidden" formControlName="_id">
       <p-image styleClass="rounded-image" [src]="imageSource" alt="Image" width="150"></p-image>
       <p-dropdown formControlName="type" [options]="agentTypes" optionValue="value" optionLabel="label" placeholder="Select a type" (onChange)="onTypeChange($event)"></p-dropdown>
       <div *ngIf="form.controls.type.invalid && (form.controls.type.dirty || form.controls.type.touched)" class="form-alert">

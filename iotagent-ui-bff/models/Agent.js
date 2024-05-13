@@ -1,6 +1,20 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const ServiceSchema = require('./Service');
+
+const ServiceSchema = new Schema({
+    _id: {
+        type: Schema.Types.ObjectId,
+        auto: true
+    },
+    service: {
+        type: Schema.Types.String,
+        required: true
+    },
+    servicePath: {
+        type: Schema.Types.String,
+        required: true
+    }
+});
 
 const AgentSchema = new Schema({
     _id: {
@@ -30,4 +44,5 @@ const AgentSchema = new Schema({
     services: [ServiceSchema]
 });
 
-module.exports = mongoose.model('agent', AgentSchema);
+const Agent = mongoose.model('agent', AgentSchema);
+module.exports = Agent;

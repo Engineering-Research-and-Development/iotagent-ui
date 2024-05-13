@@ -45,7 +45,7 @@ export class AddAgentComponent implements OnInit {
   ];
 
   form = new FormGroup({
-    id: new FormControl(null, []),
+    _id: new FormControl(null, []),
     host: new FormControl(null, [
       Validators.required
     ]),
@@ -71,7 +71,7 @@ export class AddAgentComponent implements OnInit {
   ngOnInit() {
     if(this.dialogConfig.data.objectToEdit) {
       this.isEdit = true;
-      this.form.controls.id.setValue(this.dialogConfig.data.objectToEdit.id);
+      this.form.controls._id.setValue(this.dialogConfig.data.objectToEdit._id);
       this.form.controls.apiKey.setValue(this.dialogConfig.data.objectToEdit.apiKey);
       this.form.controls.host.setValue(this.dialogConfig.data.objectToEdit.host);
       this.form.controls.port.setValue(this.dialogConfig.data.objectToEdit.port);
@@ -90,7 +90,7 @@ export class AddAgentComponent implements OnInit {
     if (selectedAgentType) {
       const index = this.agentTypes.findIndex((e: any) => e.value === selectedAgentType);
       const agent = {
-        id: this.form.controls.id.value,
+        _id: this.form.controls._id.value,
         host: this.form.controls.host.value,
         port: this.form.controls.port.value,
         apiKey: this.form.controls.apiKey.value,
@@ -99,19 +99,30 @@ export class AddAgentComponent implements OnInit {
       };
       let error: any = null;
       if(this.dialogConfig.data.objectToEdit) {
-        error = this.apiService.updateAgent(agent);
+        error = this.apiService.updateAgent(agent).subscribe(data => {
+          this.form.reset();
+          this.loading = false;
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Agent updated correctly' });
+          this.dialogConfig.data.onClose();
+        }, error => {
+          this.form.reset();
+          this.loading = false;
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message });
+          this.dialogConfig.data.onClose();
+        });
       } else {
-        error = this.apiService.addAgent(agent);
+        this.apiService.addAgent(agent).subscribe(data => {
+          this.form.reset();
+          this.loading = false;
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Agent added correctly' });
+          this.dialogConfig.data.onClose();
+        }, error => {
+          this.form.reset();
+          this.loading = false;
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message });
+          this.dialogConfig.data.onClose();
+        });
       }
-      this.form.reset();
-      this.loading = false;
-      if (error) {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error });
-        this.dialogConfig.data.onClose();
-        return;
-      }
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Agent added correctly' });
-      this.dialogConfig.data.onClose();
     } else {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: "No agent type was selected" });
     }
