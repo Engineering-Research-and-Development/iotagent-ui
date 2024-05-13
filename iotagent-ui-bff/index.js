@@ -51,6 +51,10 @@ app.use(function(err, req, res, next) {
     });
 });
 
+process.on('uncaughtException', function(err) {
+  console.error(err);
+});
+
 app.listen(config.port, () => {
   console.log('IoTAgent UI BFF started on port: ' + config.port)
 });

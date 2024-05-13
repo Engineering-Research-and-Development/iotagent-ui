@@ -43,15 +43,17 @@ export class AgentListComponent implements OnInit {
   }
 
   testAgent(agent: any) {
-    this.agentService.testConnection(Utils.buildAgentBaseUrl(agent)).subscribe((result: any) => {
-      if(result) {
-        agent.status = 'active';
-      } else {
-        agent.status = 'inactive';
-      }
-    }, (err: any) => {
-      agent.status = null;
-    });
+    if(agent) {
+      this.agentService.testConnection(agent._id).subscribe((result: any) => {
+        if(result) {
+          agent.status = 'active';
+        } else {
+          agent.status = 'inactive';
+        }
+      }, (err: any) => {
+        agent.status = null;
+      });
+    } 
   }
 
   getAgents() {

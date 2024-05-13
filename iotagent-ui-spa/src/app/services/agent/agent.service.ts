@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { environment } from 'src/app/environment';
 import { SessionService } from '../session/session.service';
+import { timeout } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +19,8 @@ export class AgentService {
     return `${environment.API_BASE_URL}/auth/agent/${idAgent}/service/${idService}/proxy`;
   }
 
-  testConnection(endpoint: string): any {
-    const idAgent = this.sessionService.getActiveAgent()._id;
-    return this.httpClient.get(`${environment.API_BASE_URL}/auth/agent/${idAgent}/proxy/version`);
+  testConnection(idAgent: string): any {
+    return this.httpClient.get(`${environment.API_BASE_URL}/auth/agent/${idAgent}/proxy/version`).pipe(timeout(2500));
   }
 
   getAbout() {

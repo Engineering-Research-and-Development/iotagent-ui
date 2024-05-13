@@ -9,7 +9,7 @@ const secureRoutes = require('./secure_routes');
 
 router.use('/basic', routes);
 router.use('/auth',
-    //passport.authenticate('jwt', { session: false }),
+    passport.authenticate('jwt', { session: false }),
     secureRoutes
 );
 
