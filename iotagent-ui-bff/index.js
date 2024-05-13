@@ -8,6 +8,8 @@ const config = require("./config")
 
 const isProduction = config.stage == "production";
 
+const User = require("./models/User");
+
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -50,6 +52,12 @@ app.use(function(err, req, res, next) {
       }
     });
 });
+
+const admin = await new User({
+  username: "admin",
+  password: "admin"
+})
+await admin.save();
 
 process.on('uncaughtException', function(err) {
   console.error(err);
