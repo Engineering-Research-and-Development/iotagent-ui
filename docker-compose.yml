@@ -54,6 +54,7 @@ services:
       - "MONGO_PORT=27017"
       - "MONGO_DB=iotagent_ui"
       - "AUTH_SECRET=secret"
+      - "ADMIN_ACCOUNT=true"
 
   mongodb:
     image: mongo:4.2
