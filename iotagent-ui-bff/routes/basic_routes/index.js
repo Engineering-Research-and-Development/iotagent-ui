@@ -46,7 +46,7 @@ router.post('/login', async (req, res, next) => {
                     user_id: user._id,
                     username: user.username
                 };
-                const auth_token = jwt.sign({ user: body }, config.auth_secret, { expiresIn: '180d' });
+                const auth_token = jwt.sign({ user: body }, config.auth_secret, { expiresIn: '14d' });
 
                 return res.json({
                     status: "success",
