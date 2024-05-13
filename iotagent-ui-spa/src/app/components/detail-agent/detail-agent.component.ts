@@ -25,21 +25,26 @@ export class DetailAgentComponent {
     private dialogConfig: DynamicDialogConfig,
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
-      this.agent = this.apiService.getAgent(this.dialogConfig.data.agentId);
-      if(!this.agent.services) {
-        this.agent.services = [];
-      }
+      this.agent = this.apiService.getAgent(this.dialogConfig.data.agentId).subscribe(data => {
+        this.agent = data;
+      }, err => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.message });
+      });
     }
   
   refreshAgent() {
-    const agent = this.apiService.getAgent(this.agent.id);
-    this.agent = agent;
+    this.agent = this.apiService.getAgent(this.dialogConfig.data.agentId).subscribe(data => {
+      console.log(data)
+      this.agent = data;
+    }, err => {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.message });
+    });
   }
 
   insertService(){
     this.addServiceDialogRef = this.dialogService.open(AddServiceComponent, { header: 'Add service', data: {
       onClose: () => { this.onCloseAddService(); },
-      agentId: this.agent.id
+      agentId: this.agent._id
     }});
   }
 
@@ -49,8 +54,11 @@ export class DetailAgentComponent {
       header: 'Delete Service',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.apiService.deleteService(this.agent.id, service);
-        this.refreshAgent();
+        this.apiService.deleteService(this.agent._id, service._id).subscribe(data => {
+          this.refreshAgent();
+        }, err => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.message });
+        });
       },
       reject: () => {
           return;

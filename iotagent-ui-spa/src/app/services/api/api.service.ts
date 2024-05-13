@@ -38,11 +38,7 @@ export class ApiService {
     return this.httpClient.put(`${environment.API_BASE_URL}/auth/agent/${agent._id}`, agent);
   }
 
-  // Service CRUD  
-
-  getAllServices(idAgent: any) {
-    return this.httpClient.get(`${environment.API_BASE_URL}/auth/agent/${idAgent}/service`);
-  }
+  // Service CRUD
 
   addService(idAgent: any, service: any) {
     return this.httpClient.post(`${environment.API_BASE_URL}/auth/agent/${idAgent}/service`, service);
