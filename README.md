@@ -10,7 +10,7 @@
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4612/badge)](https://bestpractices.coreinfrastructure.org/projects/4612)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/incubating.svg)
 [![Join the chat at https://gitter.im/iotagent-opcua/community](https://badges.gitter.im/iotagent-opcua/community.svg)](https://gitter.im/iotagent-opcua/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-<br/> <img align="right" width="200" src="./docs/images/logo.png" />
+<br/> <img align="right" width="150" src="./docs/images/logo.png" />
 
 An Internet of Things Agent that communicates and monitors any IoT Agent built on top of [IoT Agent Node.js Library](https://github.com/telefonicaid/iotagent-node-lib).
 
