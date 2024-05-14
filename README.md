@@ -1,4 +1,4 @@
-# OPC UA Agent: the FIWARE IoT Agent for OPC UA
+# IoT Agent UI: the FIWARE IoT Agent Web UI for IoT Agents
 
 [![FIWARE IoT Agents](https://nexus.lab.fiware.org/static/badges/chapters/iot-agents.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: AGPL](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://opensource.org/licenses/AGPL-3.0)
@@ -71,13 +71,10 @@ their APIs can be found in the IoT Agent Library [documentation](https://iotagen
 
 ## License
 
-The IoT Agent for OPC UA is licensed under [Affero General Public License (GPL) version 3](./LICENSE).
+The IoT Agent UI is licensed under [Affero General Public License (GPL) version 3](./LICENSE).
 
-© 2021 Engineering Ingegneria Informatica S.p.A.
+© 2024 Engineering Ingegneria Informatica S.p.A.
 
-The following third-party libraries are used under license
-
-1.  [node-opcua](http://node-opcua.github.io/) - **MIT** - © 2014-2021 Etienne Rossignon
 2.  [iotagent-node-lib](https://github.com/telefonicaid/iotagent-node-lib) - **AGPL** © 2014-2021 Telefonica
     Investigación y Desarrollo
 
