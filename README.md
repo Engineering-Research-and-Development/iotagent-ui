@@ -2,14 +2,14 @@
 
 [![FIWARE IoT Agents](https://nexus.lab.fiware.org/static/badges/chapters/iot-agents.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: AGPL](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://opensource.org/licenses/AGPL-3.0)
-[![Docker badge](https://img.shields.io/badge/quay.io-fiware%2Fiotagent--opcua-grey?logo=red%20hat&labelColor=EE0000)](https://quay.io/repository/fiware/iotagent-opcua)
+[![Docker badge](https://img.shields.io/badge/quay.io-fiware%2Fiotagent--ui-grey?logo=red%20hat&labelColor=EE0000)](https://quay.io/repository/fiware/iotagent-ui)
 [![Support badge](https://img.shields.io/badge/support-stackoverflow-orange)](https://stackoverflow.com/questions/tagged/fiware+iot)<br/>
-[![Documentation badge](https://img.shields.io/readthedocs/iotagent-opcua.svg)](https://iotagent-opcua.rtfd.io/)
-[![CI](https://github.com/Engineering-Research-and-Development/iotagent-opcua/workflows/CI/badge.svg)](https://github.com/Engineering-Research-and-Development/iotagent-opcua/actions?query=workflow%3ACI)
-[![Coverage Status](https://coveralls.io/repos/github/Engineering-Research-and-Development/iotagent-opcua/badge.svg?branch=main)](https://coveralls.io/github/Engineering-Research-and-Development/iotagent-opcua?branch=main)
+[![Documentation badge](https://img.shields.io/readthedocs/iotagent-ui.svg)](https://iotagent-ui.rtfd.io/)
+[![CI](https://github.com/Engineering-Research-and-Development/iotagent-ui/workflows/CI/badge.svg)](https://github.com/Engineering-Research-and-Development/iotagent-ui/actions?query=workflow%3ACI)
+[![Coverage Status](https://coveralls.io/repos/github/Engineering-Research-and-Development/iotagent-ui/badge.svg?branch=main)](https://coveralls.io/github/Engineering-Research-and-Development/iotagent-ui?branch=main)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4612/badge)](https://bestpractices.coreinfrastructure.org/projects/4612)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/incubating.svg)
-[![Join the chat at https://gitter.im/iotagent-opcua/community](https://badges.gitter.im/iotagent-opcua/community.svg)](https://gitter.im/iotagent-opcua/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/iotagent-ui/community](https://badges.gitter.im/iotagent-ui/community.svg)](https://gitter.im/iotagent-ui/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <br/> <img align="right" width="150" src="./docs/images/logo.png" />
 
 An Internet of Things Agent that communicates and monitors any IoT Agent built on top of [IoT Agent Node.js Library](https://github.com/telefonicaid/iotagent-node-lib).
@@ -21,7 +21,7 @@ library's GitHub repository.
 This project is part of [FIWARE](https://www.fiware.org/). For more information check the
 [FIWARE Catalogue entry for the IoT Agents](https://github.com/Fiware/catalogue/tree/main/iot-agents).
 
-| :books: [Documentation](https://iotagent-opcua.rtfd.io) | <img style="height:1em" src="https://quay.io/static/img/quay_favicon.png"/> [quay.io](https://quay.io/repository/fiware/iotagent-opcua) | :mortar_board: [Academy](https://fiware-academy.readthedocs.io/en/latest/iot-agents/idas) | :dart: [Roadmap](https://github.com/Engineering-Research-and-Development/iotagent-opcua/blob/main/roadmap.md) |
+| :books: [Documentation](https://iotagent-ui.rtfd.io) | <img style="height:1em" src="https://quay.io/static/img/quay_favicon.png"/> [quay.io](https://quay.io/repository/fiware/iotagent-ui) | :mortar_board: [Academy](https://fiware-academy.readthedocs.io/en/latest/iot-agents/idas) | :dart: [Roadmap](https://github.com/Engineering-Research-and-Development/iotagent-ui/blob/main/roadmap.md) |
 | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 
 
