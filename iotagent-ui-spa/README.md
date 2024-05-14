@@ -1,27 +1,20 @@
-# IotagentUi
+# IoT Agent User Interface - Single Page Application (SPA)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
+The Angular-based web Single Page Application (SPA) that enables user-friendly interaction with FIWARE IoT Agents.
 
-## Development server
+## Locally run and test
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Remember that SPA always needs the BFF (Backend For Frontend) up and running.
 
-## Code scaffolding
+To test the SPA locally, clone the repository and edit the `BFF_API_HOST` and `BFF_API_PORT` in the [environment.ts](./src/app/environment.ts) file, according to your BFF deployment.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+From the `iotagent-ui-spa` folder, then run:
 
-## Build
+```sh
+npm i
+npx ng serve
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Open [http://localhost:4200](http://localhost:4200) in a browser.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+To run it in a production environment, please consider the parent README.md file in the root of this repository. 
