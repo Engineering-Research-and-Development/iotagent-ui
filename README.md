@@ -75,8 +75,9 @@ The IoT Agent UI is licensed under [Affero General Public License (GPL) version 
 
 © 2024 Engineering Ingegneria Informatica S.p.A.
 
-2.  [iotagent-node-lib](https://github.com/telefonicaid/iotagent-node-lib) - **AGPL** © 2014-2021 Telefonica
+The following third-party libraries are used under license
+
+1.  [iotagent-node-lib](https://github.com/telefonicaid/iotagent-node-lib) - **AGPL** © 2014-2021 Telefonica
     Investigación y Desarrollo
 
-The full list of third-party libraries licenses can be found
-[here](https://htmlpreview.github.io/?https://github.com/Engineering-Research-and-Development/iotagent-opcua/blob/main/docs/opc_ua_agent_dependencies.html)
+
