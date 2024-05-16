@@ -90,6 +90,7 @@ export class MainSidebarComponent {
   }
 
   logoutUser() {
+    this.sessionService.deleteSession();
     this.sessionService.deleteUserSession();
     this.router.navigate(['/login']);
   }

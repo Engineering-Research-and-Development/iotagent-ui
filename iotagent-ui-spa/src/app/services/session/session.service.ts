@@ -7,6 +7,8 @@ import { MessageService } from 'primeng/api';
 })
 export class SessionService {
 
+  public pollingTimer: any = null;
+
   constructor(private router: Router, private messageService: MessageService) {
   }      
   
@@ -41,6 +43,7 @@ export class SessionService {
 
   deleteUserSession() {
     localStorage.removeItem('user');
+    clearInterval(this.pollingTimer);
   }
 
   setActiveAgent(agent: any) {

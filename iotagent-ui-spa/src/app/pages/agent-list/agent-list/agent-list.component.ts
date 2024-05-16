@@ -20,16 +20,16 @@ export class AgentListComponent implements OnInit {
   utils = Utils;
   addAgentDialogRef: DynamicDialogRef | undefined;
   detailAgentDialogRef: DynamicDialogRef | undefined;
-  pollingTimer: any;
 
   constructor(private apiService: ApiService,
               private agentService: AgentService,
               private dialogService: DialogService,
-              private confirmationService: ConfirmationService) {}
+              private confirmationService: ConfirmationService,
+              private sessionService: SessionService) {}
 
   ngOnInit() {
     this.getAgents();
-    this.pollingTimer = setInterval(() => {
+    this.sessionService.pollingTimer = setInterval(() => {
       for(let agent of this.agents) {
         this.testAgent(agent);
       }
