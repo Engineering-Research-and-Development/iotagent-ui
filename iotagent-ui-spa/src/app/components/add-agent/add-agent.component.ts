@@ -41,6 +41,11 @@ export class AddAgentComponent implements OnInit {
       label: "IoTAgent-OPCUA",
       value: "opcua",
       img: "https://github.com/Engineering-Research-and-Development/iotagent-opcua/raw/master/docs/images/iotagent-logo.png"
+    },
+    {
+      label: "IoTAgent-AAS",
+      value: "aas",
+      img: "https://github.com/Engineering-Research-and-Development/iotagent-aas/raw/master/docs/images/iotagent-logo.png"
     }
   ];
 
@@ -65,7 +70,7 @@ export class AddAgentComponent implements OnInit {
   constructor(private messageService: MessageService,
     private apiService: ApiService,
     private dialogConfig: DynamicDialogConfig) {
-      
+
     }
 
   ngOnInit() {

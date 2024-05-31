@@ -5,7 +5,8 @@ export default class Utils {
         "lwm2m":  "IoTAgent-LWM2M",
         "ul": "IoTAgent-UL",
         "lorawan":  "IoTAgent-LoRaWAN",
-        "opcua": "IoTAgent-OPCUA"
+        "opcua": "IoTAgent-OPCUA",
+        "aas": "IoTAgent-AAS"
      };
 
     static buildAgentBaseUrl(agent: any) {
