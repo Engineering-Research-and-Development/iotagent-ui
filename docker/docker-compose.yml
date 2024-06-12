@@ -35,8 +35,7 @@ services:
     ports:
       - "80:80"
     environment:
-      - "BFF_API_HOST=localhost"
-      - "BFF_API_PORT=9000"
+      - "BFF_API_BASE_URL=http://localhost:9000"
 
   iotagent-ui-bff:
     build: ../iotagent-ui-bff

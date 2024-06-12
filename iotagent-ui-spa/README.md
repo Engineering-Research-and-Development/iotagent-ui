@@ -6,7 +6,7 @@ The Angular-based web Single Page Application (SPA) that enables user-friendly i
 
 Remember that SPA always needs the BFF (Backend For Frontend) up and running.
 
-To test the SPA locally, clone the repository and edit the `BFF_API_HOST` and `BFF_API_PORT` in the [environment.ts](./src/app/environment.ts) file, according to your BFF deployment.
+To test the SPA locally, clone the repository and edit the `BFF_API_BASE_URL` in the [environment.ts](./src/app/environment.ts) file, according to your BFF deployment.
 
 From the `iotagent-ui-spa` folder, then run:
 

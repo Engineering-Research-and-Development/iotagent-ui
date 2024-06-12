@@ -14,8 +14,6 @@ COPY --from=build /app/dist/iotagent-ui-spa /usr/share/nginx/html/
 EXPOSE 80
 
 CMD ["/bin/bash", "-c", \
-"echo BFF_API_HOST=[$BFF_API_HOST] && \
- echo BFF_API_PORT=[$BFF_API_PORT] && \
-sed -i s#BFF_API_HOST#$BFF_API_HOST#g /usr/share/nginx/html/main.*.js && \
-sed -i s#BFF_API_PORT#$BFF_API_PORT#g /usr/share/nginx/html/main.*.js && \
+"echo BFF_API_BASE_URL=[$BFF_API_BASE_URL] && \
+sed -i s#BFF_API_BASE_URL#$BFF_API_BASE_URL#g /usr/share/nginx/html/main.*.js && \
 nginx -g 'daemon off;'"]
