@@ -18,10 +18,22 @@
       <div *ngIf="form.controls.apiKey.invalid && (form.controls.apiKey.dirty || form.controls.apiKey.touched)" class="form-alert">
         <div *ngIf="form.controls.apiKey.errors?.['required']">API Key is required</div>
       </div>
-      <div class="flex flex-row mt-2">
+      <div class="flex align-items-center gap-1">
+        <p-checkbox
+          [(ngModel)]="loadCheckbox"
+          [binary]="true"
+          inputId="loadCheckbox"
+          formControlName="loadCheckbox"/>
+        <label for="loadCheckbox">Load services automatically</label>
+      </div>
+      <input [hidden]="!loadCheckbox" pInputText [readOnly]="loading" formControlName="mongoDatabase" placeholder="MongoDB database" class="my-2"/>
+      <div [hidden]="!loadCheckbox" *ngIf="form.controls.mongoDatabase.invalid && (form.controls.mongoDatabase.dirty || form.controls.mongoDatabase.touched)" class="form-alert">
+        <div *ngIf="form.controls.apiKey.errors?.['required']">Mongo database is required</div>
+      </div>
+      <div class="flex flex-row mt-5">
         <p-button label="Cancel" [disabled]="loading" severity="secondary" (click)="onCancel()" class="mr-2"></p-button>
         <p-button [label]="isEdit ? 'Save': 'Add'" [disabled]="loading" (click)="onSubmit()"></p-button>
       </div>
-      
+
     </form>
 </p-card>

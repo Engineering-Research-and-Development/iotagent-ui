@@ -27,6 +27,7 @@ import { AttributesComponent } from './attributes/attributes.component';
 import { AddDeviceComponent } from './add-device/add-device.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { AddConfigGroupComponent } from './add-config-group/add-config-group.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { AddConfigGroupComponent } from './add-config-group/add-config-group.com
     ImageModule,
     DialogModule,
     FocusTrapModule,
-    InputTextareaModule
+    InputTextareaModule,
+    CheckboxModule
   ],
   exports: [
     MainSidebarComponent,

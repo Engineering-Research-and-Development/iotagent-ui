@@ -41,6 +41,10 @@ const AgentSchema = new Schema({
         type: Schema.Types.String,
         required: true
     },
+    mongoDatabase: {
+      type: Schema.Types.String,
+      required: false
+    },
     services: [ServiceSchema]
 });
 

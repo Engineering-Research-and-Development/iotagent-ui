@@ -15,7 +15,7 @@ import { ConfirmationService } from 'primeng/api';
   providers: [ConfirmationService]
 })
 export class AgentListComponent implements OnInit {
-  
+
   agents: any = [];
   utils = Utils;
   addAgentDialogRef: DynamicDialogRef | undefined;
@@ -53,7 +53,7 @@ export class AgentListComponent implements OnInit {
       }, (err: any) => {
         agent.status = null;
       });
-    } 
+    }
   }
 
   getAgents() {
@@ -63,7 +63,7 @@ export class AgentListComponent implements OnInit {
     }, err => {
 
     })
-    
+
   }
 
   onAddAgent() {
@@ -80,6 +80,10 @@ export class AgentListComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.apiService.deleteAgent(agent._id).subscribe(data => {
+          const activeAgent = this.sessionService.getActiveAgent();
+          if(activeAgent && activeAgent._id === agent._id) {
+            this.sessionService.deleteSession();
+          }
           this.getAgents();
         });
       },

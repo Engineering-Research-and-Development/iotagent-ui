@@ -7,11 +7,12 @@ const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 
 const User = require('../models/User');
+const mongoose = require("mongoose");
 
 passport.use('register', new localStrategy(
   {
     usernameField: 'username',
-    passwordField: 'password',      
+    passwordField: 'password',
     passReqToCallback: true
   },
   async (req, username, password, callback) => {
@@ -38,6 +39,7 @@ passport.use('login', new localStrategy(
     passwordField: 'password'
   },
   async (username, password, done) => {
+    console.log(mongoose.connection)
     try {
       const user = await User.findOne({username: username });
 

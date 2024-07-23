@@ -13,6 +13,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 export class AddAgentComponent implements OnInit {
 
   isEdit = false;
+  loadCheckbox = false;
 
   imageSource: any = "https://i1.wp.com/gelatologia.com/wp-content/uploads/2020/07/placeholder.png"
 
@@ -64,6 +65,8 @@ export class AddAgentComponent implements OnInit {
     type: new FormControl(null, [
       Validators.required
     ]),
+    mongoDatabase: new FormControl(null, []),
+    loadCheckbox: new FormControl(false, []),
   });
   loading: boolean = false;
 
@@ -81,6 +84,9 @@ export class AddAgentComponent implements OnInit {
       this.form.controls.host.setValue(this.dialogConfig.data.objectToEdit.host);
       this.form.controls.port.setValue(this.dialogConfig.data.objectToEdit.port);
       this.form.controls.type.setValue(this.dialogConfig.data.objectToEdit.type);
+      this.form.controls.mongoDatabase.setValue(this.dialogConfig.data.objectToEdit.mongoDatabase);
+      this.form.controls.loadCheckbox.setValue(this.dialogConfig.data.objectToEdit.mongoDatabase ? true : false);
+      this.loadCheckbox = this.dialogConfig.data.objectToEdit.mongoDatabase ? true : false;
     }
   }
 
@@ -100,6 +106,7 @@ export class AddAgentComponent implements OnInit {
         port: this.form.controls.port.value,
         apiKey: this.form.controls.apiKey.value,
         type: this.form.controls.type.value,
+        mongoDatabase: this.form.controls.mongoDatabase.value,
         img: this.agentTypes[index].img
       };
       let error: any = null;
