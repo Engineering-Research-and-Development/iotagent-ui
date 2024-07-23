@@ -22,3 +22,4 @@ const DeviceSchema = new Schema({
 
 const Device = mongoose.model('devices', DeviceSchema);
 module.exports = Device;
+module.exports = DeviceSchema;

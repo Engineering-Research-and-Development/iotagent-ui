@@ -106,7 +106,7 @@ export class AddAgentComponent implements OnInit {
         port: this.form.controls.port.value,
         apiKey: this.form.controls.apiKey.value,
         type: this.form.controls.type.value,
-        mongoDatabase: this.form.controls.mongoDatabase.value,
+        mongoDatabase: this.form.controls.loadCheckbox.value ? this.form.controls.mongoDatabase.value : null,
         img: this.agentTypes[index].img
       };
       let error: any = null;

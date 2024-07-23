@@ -57,7 +57,9 @@ router.post('/agent', async function(req,res,next){
     let agent = await new Agent(req.body);
     agent._id = new mongoose.Types.ObjectId();
     await agent.save();
-    await loadAgentServices(agent, req);
+    if(req.body.mongoDatabase) {
+      await loadAgentServices(agent, req);
+    }
     res.status(201).json(agent);
 });
 
@@ -68,7 +70,9 @@ router.get('/agent/:idAgent', async function(req,res,next){
 
 router.put('/agent/:idAgent', async function(req,res,next){
     const agent = await Agent.findOneAndUpdate({_id: req.params.idAgent}, req.body, {new: false, upsert: true});
-    await loadAgentServices(agent, req);
+    if(req.body.mongoDatabase) {
+      await loadAgentServices(agent, req);
+    }
     res.status(200).json(agent);
 });
 
@@ -100,31 +104,24 @@ router.delete('/agent/:idAgent/service/:idService', async function(req,res,next)
 });
 
 async function loadAgentServices(agent, req) {
-  if(req.body.mongoDatabase) {
-    const agentConnection = mongoose.createConnection(`mongodb://${config.mongo_host}:${config.mongo_port}/${req.body.mongoDatabase}`);
-    const IotAgentDevice = agentConnection.model('devices', DeviceSchema);
-    const devices = await IotAgentDevice.find({apikey: req.body.apiKey});
-    let services = new Set();
-    for(const d of devices) {
-      services.add({service: d.service, servicePath: d.subservice});
+  const agentConnection = mongoose.createConnection(`mongodb://${config.mongo_host}:${config.mongo_port}/${req.body.mongoDatabase}`);
+  const IotAgentDevice = agentConnection.model('devices', DeviceSchema);
+  const devices = await IotAgentDevice.find({apikey: req.body.apiKey});
+  let newServices = [];
+  let agentServices = agent.services !== null ? agent.services : [];
+  for(const d of devices) {
+    if(!agentServices.some(x => x.service === d.service && x.servicePath === d.subservice)){
+      newServices.push({service: d.service, servicePath: d.subservice});
     }
-    let agent = await Agent.find({_id: agent._id})
-    let storedServices = new Set(agent.services);
-    const difference = new Set();
-    services.forEach(element => {
-      if (!storedServices.has(element)) {
-        difference.add(element);
+  }
+  for(const s of newServices) {
+    await Agent.findOneAndUpdate({_id: agent._id}, {
+      new: false,
+      upsert: false,
+      $push: {
+        services: s
       }
-    });
-    for(const s of Array.from(difference)) {
-      await Agent.findOneAndUpdate({_id: agent._id}, {
-        new: false,
-        upsert: false,
-        $push: {
-          services: s
-        }
-      })
-    }
+    })
   }
 }
 
