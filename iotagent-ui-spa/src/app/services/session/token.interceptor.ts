@@ -11,6 +11,7 @@ import {SessionService} from './session.service';
 import { Router } from '@angular/router';
 import {tap} from "rxjs/operators";
 import { MessageService } from 'primeng/api';
+import {environment} from "../../environment";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -21,6 +22,9 @@ export class TokenInterceptor implements HttpInterceptor {
     ) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if(environment.KEYCLOAK_URL) {
+          return next.handle(request);
+        }
         if (request.url.includes('/login')) {
             return next.handle(request);
         } else {
@@ -47,7 +51,7 @@ export class TokenInterceptor implements HttpInterceptor {
                     }
             }));
         }
-        
+
     }
 
 }

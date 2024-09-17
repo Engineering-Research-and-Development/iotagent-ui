@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { SessionService } from 'src/app/services/session/session.service';
 import Utils from 'src/app/utils';
+import {environment} from "../../../environment";
+import {AuthGuard} from "../../../guard/auth.guard";
 
 @Component({
   selector: 'app-main-sidebar',
@@ -39,7 +41,8 @@ export class MainSidebarComponent {
 
   constructor(private router: Router,
               private confirmationService: ConfirmationService,
-              private sessionService: SessionService) {
+              private sessionService: SessionService,
+              private authGuard: AuthGuard) {
     this.user = sessionService.getLoggedUser();
     this.activeElem = this.router.url;
     const menuItemIndex = this.menuItems.findIndex(item => item.routerLink === this.activeElem);
@@ -90,9 +93,13 @@ export class MainSidebarComponent {
   }
 
   logoutUser() {
-    this.sessionService.deleteSession();
-    this.sessionService.deleteUserSession();
-    this.router.navigate(['/login']);
+    if(environment.KEYCLOAK_URL) {
+      this.authGuard.logout();
+    } else {
+      this.sessionService.deleteSession();
+      this.sessionService.deleteUserSession();
+      this.router.navigate(['/login']);
+    }
   }
 
   onAgentLogout() {

@@ -6,11 +6,20 @@ require('../auth');
 
 const routes = require('./basic_routes');
 const secureRoutes = require('./secure_routes');
+const keycloak = require("../middlewares/keycloak");
 
 router.use('/basic', routes);
-router.use('/auth',
+
+if(process.env.KEYCLOAK_URL) {
+  router.use('/auth',
+    [keycloak.protect()],
+    secureRoutes
+  );
+} else {
+  router.use('/auth',
     passport.authenticate('jwt', { session: false }),
     secureRoutes
-);
+  );
+}
 
 module.exports = router;

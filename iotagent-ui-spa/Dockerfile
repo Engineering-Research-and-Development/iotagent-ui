@@ -1,7 +1,7 @@
 FROM node:18 as build
 WORKDIR /app
 COPY package.json /app/
-RUN npm install
+RUN npm install --force
 COPY ./ /app/
 
 ARG env
@@ -16,4 +16,8 @@ EXPOSE 80
 CMD ["/bin/bash", "-c", \
 "echo BFF_API_BASE_URL=[$BFF_API_BASE_URL] && \
 sed -i s#BFF_API_BASE_URL#$BFF_API_BASE_URL#g /usr/share/nginx/html/main.*.js && \
+sed -i s#KEYCLOAK_URL#$KEYCLOAK_URL#g /usr/share/nginx/html/main.*.js && \
+sed -i s#KEYCLOAK_REALM#$KEYCLOAK_REALM#g /usr/share/nginx/html/main.*.js && \
+sed -i s#KEYCLOAK_CLIENT_ID#$KEYCLOAK_CLIENT_ID#g /usr/share/nginx/html/main.*.js && \
+sed -i s#KEYCLOAK_REDIRECT_URI#$KEYCLOAK_REDIRECT_URI#g /usr/share/nginx/html/main.*.js && \
 nginx -g 'daemon off;'"]

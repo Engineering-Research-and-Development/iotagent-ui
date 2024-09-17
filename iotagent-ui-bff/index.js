@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const errorhandler = require('errorhandler');
 const mongoose = require('mongoose');
+const keycloak = require('./middlewares/keycloak');
 
 const config = require("./config")
 const seed = require("./seed")
@@ -11,6 +12,9 @@ const isProduction = config.stage == "production";
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
+if(process.env.KEYCLOAK_URL) {
+  app.use(keycloak.middleware());
+}
 app.use(express.json());
 app.use(morgan('combined'));
 app.use(cors());

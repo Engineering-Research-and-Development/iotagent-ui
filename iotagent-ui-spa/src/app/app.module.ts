@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,12 +12,15 @@ import { AgentListModule } from './pages/agent-list/agent-list/agent-list.module
 import { MessageService } from 'primeng/api';
 import { ConfigGroupsModule } from './pages/config-groups/config-groups.module';
 import { LoginModule } from './pages/login/login.module';
+import {initializeKeycloak} from "./init/keycloak-init.factory";
+import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    KeycloakAngularModule,
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -29,6 +32,12 @@ import { LoginModule } from './pages/login/login.module';
     ToastModule
   ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService],
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
