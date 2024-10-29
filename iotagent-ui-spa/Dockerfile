@@ -1,7 +1,7 @@
 FROM node:18 as build
 WORKDIR /app
 COPY package.json /app/
-RUN npm install --force
+RUN npm install --force --no-package-lock
 COPY ./ /app/
 
 ARG env
