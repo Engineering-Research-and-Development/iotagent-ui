@@ -1,5 +1,5 @@
 export const environment = {
-    API_BASE_URL: 'http://localhost:9000/api/v1',
+    API_BASE_URL: 'BFF_API_BASE_URL',
     KEYCLOAK_URL: undefined,
     KEYCLOAK_REALM: '',
     KEYCLOAK_CLIENT_ID: '',
