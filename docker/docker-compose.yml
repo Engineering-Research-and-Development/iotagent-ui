@@ -43,6 +43,7 @@ services:
     environment:
       <<: *common-variables
       BFF_API_BASE_URL: 'http://localhost:9000'
+      APP_BASE_HREF: '/'
 
   iotagent-ui-bff:
     build: ../iotagent-ui-bff

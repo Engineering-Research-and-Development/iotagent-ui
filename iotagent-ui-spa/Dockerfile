@@ -15,7 +15,9 @@ EXPOSE 80
 
 CMD ["/bin/bash", "-c", \
 "echo BFF_API_BASE_URL=[$BFF_API_BASE_URL] && \
+echo APP_BASE_HREF=[$APP_BASE_HREF] && \
 sed -i s#BFF_API_BASE_URL#$BFF_API_BASE_URL#g /usr/share/nginx/html/main.*.js && \
+sed -i s#APP_BASE_HREF#$APP_BASE_HREF#g /usr/share/nginx/html/index.html && \
 sed -i s#KEYCLOAK_URL#$KEYCLOAK_URL#g /usr/share/nginx/html/main.*.js && \
 sed -i s#KEYCLOAK_REALM#$KEYCLOAK_REALM#g /usr/share/nginx/html/main.*.js && \
 sed -i s#KEYCLOAK_CLIENT_ID#$KEYCLOAK_CLIENT_ID#g /usr/share/nginx/html/main.*.js && \
