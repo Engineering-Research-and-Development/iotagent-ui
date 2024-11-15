@@ -5,7 +5,8 @@ const config = {
   "auth-server-url": `${process.env.KEYCLOAK_URL}`,
   "ssl-required": "external",
   "resource": process.env.KEYCLOAK_CLIENT,
-  "bearer-only": true
+  "bearer-only": true,
+  "realm-public-key": process.env.KEYCLOAK_REALM_PUBLIC_KEY
 }
 
 module.exports = new Keycloak({}, config);

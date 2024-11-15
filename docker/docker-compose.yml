@@ -26,6 +26,7 @@ x-common-variables: &common-variables
   KEYCLOAK_REALM: 
   KEYCLOAK_CLIENT_ID: 
   KEYCLOAK_REDIRECT_URI: 
+  KEYCLOAK_REALM_PUBLIC_KEY: 
 
 volumes:
   mongodb: ~
