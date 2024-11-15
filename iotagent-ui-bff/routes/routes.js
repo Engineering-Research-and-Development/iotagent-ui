@@ -11,6 +11,7 @@ const keycloak = require("../middlewares/keycloak");
 router.use('/basic', routes);
 
 if(process.env.KEYCLOAK_URL) {
+  console.log(process.env)
   router.use('/auth',
     [keycloak.protect()],
     secureRoutes

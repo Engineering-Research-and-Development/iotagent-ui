@@ -22,10 +22,10 @@
 version: "3.4"
 
 x-common-variables: &common-variables
-  KEYCLOAK_URL:
-  KEYCLOAK_REALM:
-  KEYCLOAK_CLIENT_ID:
-  KEYCLOAK_REDIRECT_URI:
+  KEYCLOAK_URL: 
+  KEYCLOAK_REALM: 
+  KEYCLOAK_CLIENT_ID: 
+  KEYCLOAK_REDIRECT_URI: 
 
 volumes:
   mongodb: ~
@@ -42,7 +42,7 @@ services:
       - "80:80"
     environment:
       <<: *common-variables
-      BFF_API_BASE_URL: 'http://localhost:9000'
+      BFF_API_BASE_URL: 'http://localhost:9000/api/v1'
       APP_BASE_HREF: '/'
 
   iotagent-ui-bff:

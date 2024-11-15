@@ -5,6 +5,7 @@ import { environment } from 'src/app/environment';
 export function initializeKeycloak(
   keycloak: KeycloakService
 ) {
+  console.log(environment)
   if(environment.keycloakUrl) {
     return () =>
       keycloak.init({
