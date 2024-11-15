@@ -22,7 +22,7 @@ export class TokenInterceptor implements HttpInterceptor {
     ) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if(environment.KEYCLOAK_URL) {
+        if(environment.keycloakUrl) {
           return next.handle(request);
         }
         if (request.url.includes('/login')) {

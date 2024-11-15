@@ -5,18 +5,18 @@ import { environment } from 'src/app/environment';
 export function initializeKeycloak(
   keycloak: KeycloakService
 ) {
-  if(environment.KEYCLOAK_URL) {
+  if(environment.keycloakUrl) {
     return () =>
       keycloak.init({
         config: {
-          url: environment.KEYCLOAK_URL,
-          realm: environment.KEYCLOAK_REALM,
-          clientId: environment.KEYCLOAK_CLIENT_ID,
+          url: environment.keycloakUrl,
+          realm: environment.keycloakRealm,
+          clientId: environment.keycloakClientId,
         },
         initOptions: {
           checkLoginIframe: false,
           pkceMethod: 'S256',
-          redirectUri: environment.KEYCLOAK_REDIRECT_URI,
+          redirectUri: environment.keycloakRedirectUri,
         }
       });
   } else {

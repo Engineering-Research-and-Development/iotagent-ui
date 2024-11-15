@@ -9,11 +9,11 @@ import {environment} from "./environment";
 
 const routes: Routes = [
   { path: '', redirectTo: '/agent-list', pathMatch: 'full'},
-  { path: 'agent-list', component: AgentListComponent, canActivate: environment.KEYCLOAK_URL ? [AuthGuard] : []},
-  { path: 'devices', component: DevicesComponent, canActivate: environment.KEYCLOAK_URL ? [AuthGuard] : []},
-  { path: 'config-groups', component: ConfigGroupsComponent, canActivate: environment.KEYCLOAK_URL ? [AuthGuard] : []},
+  { path: 'agent-list', component: AgentListComponent, canActivate: environment.keycloakUrl ? [AuthGuard] : []},
+  { path: 'devices', component: DevicesComponent, canActivate: environment.keycloakUrl ? [AuthGuard] : []},
+  { path: 'config-groups', component: ConfigGroupsComponent, canActivate: environment.keycloakUrl ? [AuthGuard] : []},
 ];
-routes.push(environment.KEYCLOAK_URL ?
+routes.push(environment.keycloakUrl ?
   { path: 'login', redirectTo: '/agent-list'} : { path: 'login', component: LoginComponent});
 
 @NgModule({

@@ -93,7 +93,7 @@ export class MainSidebarComponent {
   }
 
   logoutUser() {
-    if(environment.KEYCLOAK_URL) {
+    if(environment.keycloakUrl) {
       this.authGuard.logout();
     } else {
       this.sessionService.deleteSession();

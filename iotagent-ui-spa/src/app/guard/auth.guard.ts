@@ -41,6 +41,6 @@ export class AuthGuard extends KeycloakAuthGuard {
   }
 
   async logout() {
-    await this.keycloak.logout(environment.KEYCLOAK_REDIRECT_URI);
+    await this.keycloak.logout(environment.keycloakRedirectUri);
   }
 }
