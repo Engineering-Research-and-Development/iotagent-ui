@@ -7,7 +7,7 @@
 [![Documentation badge](https://img.shields.io/readthedocs/iotagent-ui.svg)](https://iotagent-ui.rtfd.io/)
 [![CI](https://github.com/Engineering-Research-and-Development/iotagent-ui/workflows/CI/badge.svg)](https://github.com/Engineering-Research-and-Development/iotagent-ui/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/Engineering-Research-and-Development/iotagent-ui/badge.svg?branch=main)](https://coveralls.io/github/Engineering-Research-and-Development/iotagent-ui?branch=main)
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4612/badge)](https://bestpractices.coreinfrastructure.org/projects/4612)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9737/badge)](https://www.bestpractices.dev/projects/9737)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/incubating.svg)
 [![Join the chat at https://gitter.im/iotagent-ui/community](https://badges.gitter.im/iotagent-ui/community.svg)](https://gitter.im/iotagent-ui/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <br/> <img align="right" width="150" src="./docs/images/logo.png" />
