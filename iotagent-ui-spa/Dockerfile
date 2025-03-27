@@ -22,4 +22,5 @@ sed -i s#KEYCLOAK_URL#$KEYCLOAK_URL#g /usr/share/nginx/html/main.*.js && \
 sed -i s#KEYCLOAK_REALM#$KEYCLOAK_REALM#g /usr/share/nginx/html/main.*.js && \
 sed -i s#KEYCLOAK_CLIENT_ID#$KEYCLOAK_CLIENT_ID#g /usr/share/nginx/html/main.*.js && \
 sed -i s#KEYCLOAK_REDIRECT_URI#$KEYCLOAK_REDIRECT_URI#g /usr/share/nginx/html/main.*.js && \
+sed -i s#KEYCLOAK_AUTHORIZED_ROLE#$KEYCLOAK_AUTHORIZED_ROLE#g /usr/share/nginx/html/main.*.js && \
 nginx -g 'daemon off;'"]
