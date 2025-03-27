@@ -25,16 +25,21 @@ export class AuthGuard extends KeycloakAuthGuard {
       await this.keycloak.login({
         redirectUri: window.location.origin + state.url,
       });
-    } else {
-      try {
-        await this.keycloak.loadUserProfile(true);
-        this.sessionSevice.setLoggedUser(
-          this.keycloak.getUsername(),
-          this.keycloak.getToken()
-        );
-      } catch (e) {
-        console.error(e);
-      }
+      return false;
+    }
+
+    if (environment.keycloakAuthorizedRole && !this.roles.includes(environment.keycloakAuthorizedRole)) {
+      return this.router.parseUrl('/unauthorized');
+    }
+
+    try {
+      await this.keycloak.loadUserProfile(true);
+      this.sessionSevice.setLoggedUser(
+        this.keycloak.getUsername(),
+        this.keycloak.getToken()
+      );
+    } catch (e) {
+      console.error(e);
     }
 
     return this.authenticated;

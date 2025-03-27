@@ -3,5 +3,6 @@ export const environment = {
     keycloakUrl: 'KEYCLOAK_URL',
     keycloakRealm: 'KEYCLOAK_REALM',
     keycloakClientId: 'KEYCLOAK_CLIENT_ID',
-    keycloakRedirectUri: 'KEYCLOAK_REDIRECT_URI'
+    keycloakRedirectUri: 'KEYCLOAK_REDIRECT_URI',
+    keycloakAuthorizedRole: 'KEYCLOAK_AUTHORIZED_ROLE',
 }

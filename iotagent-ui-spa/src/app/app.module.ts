@@ -14,6 +14,7 @@ import { ConfigGroupsModule } from './pages/config-groups/config-groups.module';
 import { LoginModule } from './pages/login/login.module';
 import {initializeKeycloak} from "./init/keycloak-init.factory";
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
+import {UnauthorizedModule} from "./pages/unauthorized/unauthorized.module";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
     DevicesModule,
     ConfigGroupsModule,
     LoginModule,
-    ToastModule
+    ToastModule,
+    UnauthorizedModule
   ],
   providers: [
     {

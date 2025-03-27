@@ -6,14 +6,15 @@ require('../auth');
 
 const routes = require('./basic_routes');
 const secureRoutes = require('./secure_routes');
+const extractToken = require("../middlewares/extractToken");
+const checkRole = require("../middlewares/checkRole");
 const keycloak = require("../middlewares/keycloak");
 
 router.use('/basic', routes);
 
 if(process.env.KEYCLOAK_URL) {
-  console.log(process.env)
   router.use('/auth',
-    [keycloak.protect()],
+    [keycloak.protect(), extractToken, checkRole],
     secureRoutes
   );
 } else {

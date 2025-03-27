@@ -6,7 +6,7 @@ const config = {
   "ssl-required": "external",
   "resource": process.env.KEYCLOAK_CLIENT,
   "bearer-only": true,
-  "realm-public-key": process.env.KEYCLOAK_REALM_PUBLIC_KEY
+  //"realm-public-key": process.env.KEYCLOAK_REALM_PUBLIC_KEY
 }
 
 module.exports = new Keycloak({}, config);
