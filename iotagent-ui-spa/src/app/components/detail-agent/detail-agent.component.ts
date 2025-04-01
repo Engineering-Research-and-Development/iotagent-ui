@@ -82,6 +82,6 @@ export class DetailAgentComponent {
   }
 
   isServiceAlreadyActive(service: any){
-    return this.sessionService.getActiveService()?.service == service.service
+    return this.sessionService.getActiveService()?.service == service.service && this.sessionService.getActiveService()?.servicePath == service.servicePath;
   }
 }
