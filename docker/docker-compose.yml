@@ -64,6 +64,7 @@ services:
       MONGO_DB: 'iotagent_ui'
       AUTH_SECRET: 'secret'
       ADMIN_ACCOUNT: 'true'
+      EXPRESS_LIMIT: '1mb'
 
   mongodb:
     image: mongo:4.2

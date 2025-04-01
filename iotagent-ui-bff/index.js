@@ -7,6 +7,7 @@ const keycloak = require('./middlewares/keycloak');
 
 const config = require("./config")
 const seed = require("./seed")
+const bodyParser = require('body-parser');
 
 const isProduction = config.stage == "production";
 
@@ -15,6 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 if(process.env.KEYCLOAK_URL) {
   app.use(keycloak.middleware());
 }
+app.use(bodyParser.json({ limit: config.express_limit }));
+app.use(bodyParser.urlencoded({ extended: true, limit: config.express_limit }));
 app.use(express.json());
 app.use(morgan('combined'));
 app.use(cors());
