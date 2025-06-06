@@ -1,6 +1,16 @@
-<div class="flex align-items-center justify-content-center h-screen">
-  <p-card header="Iot Agent UI" subheader="Login">
-    <p>Unauthorized access. Please login to access the page.</p>
-    <button pButton (click)="retryLogin()" type="submit" label="Retry Login"></button>
-  </p-card>
+<div class="flex align-items-center gap-2">
+  <img src="assets/fiware-logo.png" class="w-3rem"/>
+  <h1>IoT Agent UI</h1>
 </div>
+<br>
+<div class="card flex justify-content-center gap-2">
+  <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+</div>
+<div class="card flex justify-content-center gap-2 body">
+  <div class="container">
+      <i class="lock-icon pi pi-lock"></i>
+      <h1 class="title">Restricted Access Page</h1>
+      <p>Unauthorized access, the logged user does not have the required role to use this resource, please close the tab and contact the administrator.</p>
+    </div>
+</div>
+<br>

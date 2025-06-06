@@ -6,7 +6,8 @@ import {ButtonModule} from "primeng/button";
 import {CardModule} from "primeng/card";
 import {DividerModule} from "primeng/divider";
 import {InputTextModule} from "primeng/inputtext";
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({
@@ -20,7 +21,9 @@ import {InputTextModule} from "primeng/inputtext";
     ButtonModule,
     CardModule,
     DividerModule,
-    InputTextModule
+    InputTextModule,
+    ConfirmDialogModule,
+    BreadcrumbModule,
   ]
 })
 export class UnauthorizedModule { }

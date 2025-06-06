@@ -1,0 +1,30 @@
+.body {
+    margin: 0;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+.container {
+    text-align: center;
+    color: #333;
+    background-color: #ffffff; /* Sfondo bianco per il riquadro */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+    max-width: 500px; /* Larghezza massima per il contenitore */
+}
+.lock-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+.title {
+    font-size: 36px;
+    margin: 0 0 20px 0;
+}
+p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+}
