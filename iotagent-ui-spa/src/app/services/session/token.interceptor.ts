@@ -23,7 +23,19 @@ export class TokenInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if(environment.keycloakUrl) {
-          return next.handle(request);
+          return next.handle(request).pipe( tap(() => {},
+          (err: any) => {
+              // handle response
+              if (err instanceof HttpErrorResponse) {
+                    if(environment.keycloakAuthorizedRole && err.status === 401) {
+                        return this.router.navigate(['unauthorized']);
+                    }else{
+                    return false;
+                    }
+              } else {
+                  return false;
+              }
+            }));
         }
         if (request.url.includes('/login')) {
             return next.handle(request);
