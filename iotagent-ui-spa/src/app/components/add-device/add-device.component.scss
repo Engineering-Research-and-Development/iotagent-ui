@@ -1,0 +1,105 @@
+
+.form-group {
+  display: flex;
+  align-items: center;
+}
+
+.form-group label {
+  width: 12vw;
+  margin-right: 10px;
+}
+
+
+.expandable-input{
+  width:100%;
+}
+
+.expandable-input:focus{
+  width:58vw;
+  z-index: 9999;
+  position: relative;
+}
+
+.expandable-input-2{
+  width: 15vw;
+}
+
+.grid-element{
+  width: 15vw;
+  display: inline-grid;
+}
+
+.expandable-input-2:focus{
+  width:58vw;
+  z-index: 9999;
+  position: relative;
+}
+
+td {
+  max-width: 20vw;
+  width: 20vw;
+  overflow: visible;
+}
+
+p{
+  overflow-y: auto !important;
+}
+
+.row-to-delete {
+  border: 2px solid orange;
+  background-color: #fff8e1;
+}
+
+
+.warning-message {
+  color: orange;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+#map{
+  width: 78vw;
+  height: 60vh;
+}
+
+.view-width{
+  display: block;
+  width: 90vw;
+}
+
+::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  padding: 1.25rem;
+  border: 1px solid #dee2e6;
+  color: #4b535a;
+  background: #f8f9fa;
+  font-weight: 700;
+  border-radius: 6px;
+  margin-right: 0.5vw;
+}
+
+::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  border-bottom: none !important;
+  color: black;
+}
+
+.invalid-field {
+  border: 3px solid red;
+  border-radius: 8px;
+}
+
+.invalid-dropdown{
+  border-top: 14px solid red;
+  border-left: 3px solid red;
+  border-right: 3px solid red;
+  border-bottom: 14px solid red;
+}
+
+.margin-left{
+  margin-left: 9.4vw;
+}
+
+
+
+
+
+

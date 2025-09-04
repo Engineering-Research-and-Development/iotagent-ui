@@ -28,6 +28,10 @@ import { AddDeviceComponent } from './add-device/add-device.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { AddConfigGroupComponent } from './add-config-group/add-config-group.component';
 import { CheckboxModule } from 'primeng/checkbox';
+import { PanelModule } from 'primeng/panel';
+import { TooltipModule } from 'primeng/tooltip';
+import { TabViewModule } from 'primeng/tabview';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 @NgModule({
   declarations: [
@@ -61,12 +65,18 @@ import { CheckboxModule } from 'primeng/checkbox';
     DialogModule,
     FocusTrapModule,
     InputTextareaModule,
-    CheckboxModule
+    CheckboxModule,
+    PanelModule,
+    TooltipModule,
+    TabViewModule,
+    InputSwitchModule
   ],
   exports: [
     MainSidebarComponent,
     DetailAgentComponent,
-    AddAgentComponent
+    AddAgentComponent,
+    AddDeviceComponent,
+    AddConfigGroupComponent
   ],
   providers: [
     DialogService
