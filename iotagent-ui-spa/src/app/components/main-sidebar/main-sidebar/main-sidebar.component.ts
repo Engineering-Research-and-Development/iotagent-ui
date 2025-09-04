@@ -37,7 +37,7 @@ export class MainSidebarComponent {
   ];
 
   breadItems: any = [];
-  home = { icon: 'pi pi-home', routerLink: '/' };
+  home = { icon: 'pi pi-home', routerLink: '/', label: ''};
 
   constructor(private router: Router,
               private confirmationService: ConfirmationService,
@@ -46,10 +46,15 @@ export class MainSidebarComponent {
     this.user = sessionService.getLoggedUser();
     this.activeElem = this.router.url;
     const menuItemIndex = this.menuItems.findIndex(item => item.routerLink === this.activeElem);
+
+    if(this.router.url != "/agent-list"){
+      this.home.label = 'Agent List';
+    }
     this.breadItems = [
       {
         label: this.menuItems[menuItemIndex].label,
         routerLink: this.menuItems[menuItemIndex].routerLink,
+        styleClass: 'breadcrumb-bold'
       }
     ];
     this.checkAndSetActiveAgentAndService();
@@ -79,7 +84,9 @@ export class MainSidebarComponent {
     if(this.isMenuItemEnabled(elem)) {
       this.activeElem = elem;
       this.router.navigate([`/${elem}`]);
-      this.sidebarVisible = false;
+      setTimeout(() => {
+        this.sidebarVisible = false;
+      }, 500);
     }
   }
 

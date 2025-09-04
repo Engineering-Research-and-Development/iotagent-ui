@@ -17,3 +17,10 @@
         }
     }
 }
+
+::ng-deep .p-menuitem-icon{
+    padding-right: 0.4vw;
+}
+::ng-deep .breadcrumb-bold {
+    font-weight: bold;
+}
