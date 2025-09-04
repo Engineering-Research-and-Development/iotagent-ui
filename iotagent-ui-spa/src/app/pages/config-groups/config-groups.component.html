@@ -1,58 +1,86 @@
 <app-main-sidebar></app-main-sidebar>
 
-<div *ngIf="configGroups && configGroups.services" class="flex gap-2 mt-5 w-full">
-    <p-fieldset legend="List" class="flex-grow-1">
-        <p-toolbar styleClass="mb-4">
+<div *ngIf="mode === 'view'" class="flex flex-column mt-5 centered">
+
+    <p-fieldset legend="Actions" styleClass="mb-2" class="view-width">
+        <p-toolbar>
             <ng-template pTemplate="left">
                 <button pButton pRipple label="Add config group" icon="pi pi-plus" class="p-button-success mr-2" (click)="onAddConfigGroup()"></button>
             </ng-template>
+            <ng-template pTemplate="right">
+                <button pButton pRipple label="Download" icon="pi pi-download" class="p-button-primary mr-2" (click)="downloadJsonConfiguration()"></button>
+            </ng-template>
         </p-toolbar>
-        <p-table *ngIf="configGroups.services" [value]="configGroups.services" [tableStyle]="{ 'min-width': '50rem' }">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>resource</th>
-                    <th>apikey</th>
-                    <th>service</th>
-                    <th>subservice</th>
-                    <th>entity_type</th>
-                    <th></th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-item>
-                <tr>
-                    <td>{{ item.resource }}</td>
-                    <td>{{ item.apikey }}</td>
-                    <td>{{ item.service }}</td>
-                    <td>{{ item.subservice }}</td>
-                    <td>{{ item.entity_type }}</td>
-                    <td>
-                        <button pButton pRipple icon="pi pi-file-edit" class="p-button-rounded p-button-success" (click)="editConfigGroup(item)"></button>
-                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteConfigGroup(item)"></button>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
     </p-fieldset>
+    <div class="view-width">
+        <p-fieldset *ngIf="configGroups && configGroups.services" legend="List" styleClass="mt-2">
+            <div class="fieldset-content">
+                <div class="table-width">
+                    <p-table 
+                        *ngIf="showedConfigGroup" 
+                        [value]="showedConfigGroup" 
+                        responsiveLayout="stack" [breakpoint]="'960px'"
+                        [paginator]="true"
+                        [rows]="10"
+                        [rowsPerPageOptions]="[10, 20]"
+                        >
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>
+                                    <div>   
+                                        Api Key
+                                        <input type="text" pInputText style="margin-left: 0.5vw;" placeholder="Search by api key" id="filter_apikey" #filter_apikey (input)="interactiveSearchConfigGroup(filter_apikey.value)">
+                                        <p-dropdown
+                                            [(ngModel)]="selectedResource" 
+                                            styleClass="ml-2"
+                                            [options]="resources"
+                                            placeholder="Search by resource"
+                                        ></p-dropdown>
+                                        <i pTooltip="Filter by resource" tooltipPosition="top" class="pi pi-search ml-2" (click)="searchConfigGroupByResource()"></i>
+                                        <i pTooltip="Clear Filter" tooltipPosition="top" class="pi pi-filter-slash ml-2" (click)="refreshFilters()"></i> 
+                                        <i pTooltip="Reset" tooltipPosition="top" class="pi pi-refresh ml-2" (click)="totalReset()"></i> 
+                                    </div>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-item>
+                            <tr>
+                                <td (click)="OnSelectedConfigGroup(item)" [ngClass]="(item.apikey === selectedConfigGroup?.apikey && item.resource === selectedConfigGroup?.resource) ? 'selectedRow' : 'unselectedRow'">{{ item.apikey }}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+                <div class="panel-width">
+                    <p-panel header="Details">
+                        <ng-template pTemplate="header">
+                            <div class="custom-header"></div>
+                        </ng-template>
+                        <p *ngIf="!selectedConfigGroup"> Select an Identifier to see the config group details here</p>
+                        <div *ngIf="selectedConfigGroup" class="selected-group">
+                            <p-panel header="Info" [toggleable]="true">
+                                <p><strong>Resource:</strong> {{ selectedConfigGroup.resource }}</p>
+                            </p-panel>
+                            <p-panel header="Context Informations" [collapsed]="true" [toggleable]="true">
+                                <b>Active</b>: <p-tag [value]="selectedConfigGroup.attributes?.length" class="cursor-pointer" (click)="onOpenAttributes(selectedConfigGroup)"></p-tag>&nbsp;
+                                <b>Lazy</b>: <p-tag [value]="selectedConfigGroup.lazy?.length" class="cursor-pointer" (click)="onOpenLazy(selectedConfigGroup)"></p-tag>&nbsp;
+                                <b>Static</b>: <p-tag [value]="selectedConfigGroup.static_attributes?.length" class="cursor-pointer" (click)="onOpenStaticAttributes(selectedConfigGroup)"></p-tag>&nbsp;
+                                <b>Commands</b>: <p-tag [value]="selectedConfigGroup.commands?.length" class="cursor-pointer" (click)="onOpenCommands(selectedConfigGroup)"></p-tag>
+                            </p-panel>
+                            <p-panel header="Operations">
+                                <button pButton pRipple label="Edit" icon="pi pi-file-edit" class="p-button p-button-success" (click)="editConfigGroup(selectedConfigGroup)"></button>
+                                <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button p-button-warning ml-2" (click)="deleteConfigGroup(selectedConfigGroup)"></button>
+                            </p-panel>
+                        </div>
+                    </p-panel>
+                </div>
+            </div>
+        </p-fieldset>
+    </div>
+</div>
+<div *ngIf="mode === 'add/edit'" class="flex flex-column mt-5 centered">
+    <app-add-config-group [data]="data" (operationCompleted)="onCloseAddConfigGroup($event)"></app-add-config-group>
 </div>
 
-<div *ngIf="configGroups && configGroups.services" class="flex gap-2 mt-5 w-full">
-    <p-fieldset legend="JSON" class="flex-grow-1">
-        <div *ngIf="configGroups">
-            <p-splitter [style]="{ width: '100%' }" styleClass="mb-5">
-                <ng-template pTemplate>
-                    <div class="col overflow-y-scroll overflow-x-scroll" style="max-width: 50vw;">
-                        <ngx-json-viewer [depth]="2" [json]="configGroups"></ngx-json-viewer>
-                    </div>
-                </ng-template>
-                <ng-template pTemplate>
-                    <div class="col overflow-y-scroll overflow-x-scroll">
-                        <pre>{{configGroups | json}}</pre>
-                    </div>
-                </ng-template>
-            </p-splitter>   
-        </div>
-    </p-fieldset>
-</div>
 
 <div class="card flex justify-content-center gap-2">
     <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>

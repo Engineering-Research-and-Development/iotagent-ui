@@ -10,6 +10,14 @@ import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogService } from 'primeng/dynamicdialog';
+import { DialogModule } from 'primeng/dialog';
+import { PanelModule } from 'primeng/panel';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
+import { TooltipModule } from 'primeng/tooltip';
+import { TagModule } from 'primeng/tag';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -25,7 +33,17 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     NgxJsonViewerModule,
     TableModule,
     ToolbarModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    DialogModule,
+    PanelModule,
+    DropdownModule,
+    FormsModule,
+    TooltipModule,
+    TagModule,
+    InputTextModule
+  ],
+  providers: [
+    DialogService
   ]
 })
 export class ConfigGroupsModule { }
