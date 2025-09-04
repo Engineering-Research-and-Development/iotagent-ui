@@ -1,78 +1,106 @@
 <app-main-sidebar></app-main-sidebar>
 
-<div class="flex flex-column mt-5">
-    <p-fieldset *ngIf="devices && devices.devices" legend="List">
-        <p-toolbar styleClass="mb-4">
+<div *ngIf="mode === 'view'" class="flex flex-column mt-5 centered">
+
+    <p-fieldset legend="Actions" styleClass="mb-2" class="view-width">
+        <p-toolbar>
             <ng-template pTemplate="left">
                 <button pButton pRipple label="Add device" icon="pi pi-plus" class="p-button-success mr-2" (click)="onAddDevice()"></button>
+                <button icon="pi pi-sitemap" label="Change view (Device Tree)" *ngIf="showedLayout === 'Hierarchical' && devices && devices.devices" pButton pRipple class="p-button change-view-button" (click)="changeLayout()"></button>
+                <button icon="pi pi-list" label="Change view (List)" *ngIf="showedLayout === 'mindmap' && devices && devices.devices" pButton pRipple class="p-button change-view-button" (click)="changeLayout()"></button>
+            </ng-template>
+            <ng-template pTemplate="right">
+                <button pButton pRipple label="Download" icon="pi pi-download" class="p-button-primary mr-2" (click)="downloadJsonConfiguration()"></button>
+            </ng-template>
+        </p-toolbar>    
+        <p-toolbar styleClass="mt-2" *ngIf="selectedDevice && showedLayout === 'mindmap'">
+            <ng-template pTemplate="left">
+                <b>Identifier</b>: &nbsp; <p style="font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;">{{ selectedDevice.device_id }}</p>
+            </ng-template>
+            <ng-template pTemplate="right">
+                <button pButton pRipple label="Edit" icon="pi pi-file-edit" class="p-button p-button-success mr-2" (click)="editDevice(selectedDevice)"></button>
+                <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button p-button-warning" (click)="deleteDevice(selectedDevice)"></button>
             </ng-template>
         </p-toolbar>
-        <p-table *ngIf="devices.devices" [value]="devices.devices" responsiveLayout="stack" [breakpoint]="'960px'" [tableStyle]="{'min-width': '50rem'}">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>device_id</th>
-                    <th>apikey</th>
-                    <th>service</th>
-                    <th>service_path</th>
-                    <th>entity_type</th>
-                    <th>entity_name</th>
-                    <th>endpoint</th>
-                    <th>attributes</th>
-                    <th>lazy</th>
-                    <th>commands</th>
-                    <th>static_attributes</th>
-                    <th></th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-item>
-                <tr>
-                    <td>{{ item.device_id }}</td>
-                    <td>{{ item.apikey }}</td>
-                    <td>{{ item.service }}</td>
-                    <td>{{ item.service_path }}</td>
-                    <td>{{ item.entity_type }}</td>
-                    <td>{{ item.entity_name }}</td>
-                    <td>{{ item.endpoint }}</td>
-                    <td>
-                        <p-tag [value]="item.attributes?.length" class="cursor-pointer" (click)="onOpenAttributes(item)"></p-tag>
-                    </td>
-                    <td>
-                        <p-tag [value]="item.lazy?.length" class="cursor-pointer" (click)="onOpenLazy(item)"></p-tag>
-                    </td>
-                    <td>
-                        <p-tag [value]="item.commands?.length" class="cursor-pointer" (click)="onOpenCommands(item)"></p-tag>
-                    </td>
-                    <td>
-                        <p-tag [value]="item.static_attributes?.length" class="cursor-pointer" (click)="onOpenStaticAttributes(item)"></p-tag>
-                    </td>
-                    <td>
-                        <button pButton pRipple icon="pi pi-file-edit" class="p-button-rounded p-button-success" (click)="editDevice(item)"></button>
-                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteDevice(item)"></button>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
     </p-fieldset>
+    <div *ngIf="showedLayout === 'Hierarchical'" class="view-width">
+        <p-fieldset *ngIf="devices && devices.devices" legend="List ( Total: {{devices.devices.length}} )" styleClass="mt-2">
+            <div class="fieldset-content">
+                <div class="table-width">
+                    <p-table 
+                        *ngIf="showedDevices" 
+                        [value]="showedDevices" 
+                        responsiveLayout="stack" [breakpoint]="'960px'"
+                        [paginator]="true"
+                        [rows]="10"
+                        [rowsPerPageOptions]="[10, 20]"
+                        >
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>
+                                    <div>   
+                                        Identifiers
+                                        <input type="text" pInputText class="search-field" placeholder="Search by ID (Full text search)" id="filter_device" #filter_device (input)="interactiveSearchDevice(filter_device.value)">
+                                        <p-dropdown
+                                            [(ngModel)]="selectedType" 
+                                            styleClass="ml-2"
+                                            [options]="entityTypes"
+                                            placeholder="Search by type"
+                                        ></p-dropdown>
+                                        <i pTooltip="Filter by type" tooltipPosition="top" class="pi pi-search ml-2" (click)="searchDeviceBytype()"></i>
+                                        <i pTooltip="Clear Filter" tooltipPosition="top" class="pi pi-filter-slash ml-2" (click)="refreshFilters()"></i> 
+                                        <i pTooltip="Reset" tooltipPosition="top" class="pi pi-refresh ml-2" (click)="totalReset()"></i> 
+                                    </div>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-item>
+                            <tr>
+                                <td (click)="OnSelectedDevice(item)" [ngClass]="(item.device_id === selectedDevice?.device_id) ? 'selectedRow' : 'unselectedRow'">{{ item.device_id }}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+                <div class="panel-width">
+                    <p-panel header="Details">
+                        <ng-template pTemplate="header">
+                            <div class="custom-header"></div>
+                        </ng-template>
+                        <p *ngIf="!selectedDevice"> Select an Identifier to see the device details here</p>
+                        <div *ngIf="selectedDevice" class="selected-device">
+                            <p-panel header="Info">
+                                <p><strong>Name:</strong> {{ selectedDevice.entity_name }}</p>
+                            </p-panel>
+                            <p-panel header="Tenant" [toggleable]="true">
+                                <p><strong>Api Key:</strong> {{ selectedDevice.apikey }}</p>
+                                <p><strong>Service:</strong> {{ selectedDevice.service }}</p>
+                                <p><strong>Service path:</strong> {{ selectedDevice.service_path }}</p>
+                                <p><strong>Endpoint:</strong> {{ selectedDevice.endpoint }}</p>
+                            </p-panel>
+                            <p-panel header="Context Informations" [collapsed]="true" [toggleable]="true">
+                                <b>Active</b>: <p-tag [value]="selectedDevice.attributes?.length" class="cursor-pointer" (click)="onOpenAttributes(selectedDevice)"></p-tag>&nbsp;
+                                <b>Lazy</b>: <p-tag [value]="selectedDevice.lazy?.length" class="cursor-pointer" (click)="onOpenLazy(selectedDevice)"></p-tag>&nbsp;
+                                <b>Static</b>: <p-tag [value]="selectedDevice.static_attributes?.length" class="cursor-pointer" (click)="onOpenStaticAttributes(selectedDevice)"></p-tag>&nbsp;
+                                <b>Commands</b>: <p-tag [value]="selectedDevice.commands?.length" class="cursor-pointer" (click)="onOpenCommands(selectedDevice)"></p-tag>
+                            </p-panel>
+                            <p-panel header="Operations">
+                                <button pButton pRipple label="Edit" icon="pi pi-file-edit" class="p-button p-button-success" (click)="editDevice(selectedDevice)"></button>
+                                <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button p-button-warning ml-2" (click)="deleteDevice(selectedDevice)"></button>
+                            </p-panel>
+                        </div>
+                    </p-panel>
+                </div>
+            </div>
+        </p-fieldset>
+    </div>
+    <div [hidden]="showedLayout === 'Hierarchical'">
+        <p-fieldset legend="Device Tree" styleClass="mb-2">
+            <div id="map"></div>
+        </p-fieldset>
+    </div>
 </div>
-
-<div *ngIf="devices && devices.devices" class="flex gap-2 mt-5 w-full">
-    <p-fieldset legend="JSON" class="flex-grow-1">
-        <div *ngIf="devices">
-            <p-splitter [style]="{ width: '100%' }" styleClass="mb-5">
-                <ng-template pTemplate>
-                    <div class="col overflow-y-scroll overflow-x-scroll" style="max-width: 50vw;">
-                        <ngx-json-viewer [depth]="2" [json]="devices"></ngx-json-viewer>
-                    </div>
-                </ng-template>
-                <ng-template pTemplate>
-                    <div class="col overflow-y-scroll overflow-x-scroll">
-                        <pre>{{devices | json}}</pre>
-                    </div>
-                </ng-template>
-            </p-splitter>
-            
-        </div>
-    </p-fieldset>
+<div *ngIf="mode === 'add/edit'" class="flex flex-column mt-5 centered">
+    <app-add-device [data]="data" (operationCompleted)="onCloseAddDevice($event)"></app-add-device>
 </div>
 
 <div class="card flex justify-content-center gap-2">

@@ -13,6 +13,11 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DialogModule } from 'primeng/dialog';
+import { PanelModule } from 'primeng/panel';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
+import { TooltipModule } from 'primeng/tooltip';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -30,7 +35,12 @@ import { DialogModule } from 'primeng/dialog';
     TagModule,
     ToolbarModule,
     DialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    PanelModule,
+    DropdownModule,
+    FormsModule,
+    TooltipModule,
+    InputTextModule
   ],
   providers: [
     DialogService

@@ -1,3 +1,94 @@
 td {
-    max-width: 100px; word-break: break-all;
+    width: 40vw;
+    word-break: break-all;
 }
+
+.selectedRow{
+    background-color: rgb(134, 211, 250);
+    cursor: pointer;
+}
+
+.selectedRow > .pi-filter-fill{
+    color: rgb(98, 250, 179);
+}
+
+.unselectedRow:hover{
+    background-color: rgb(173, 225, 250);
+    cursor: pointer;
+}
+
+.unselectedRow > .pi-filter-fill{
+    visibility: hidden;
+}
+
+.unselectedRow:hover > .pi-filter-fill{
+    visibility: visible;
+}
+
+.centered{
+    align-items: center;
+}
+
+.view-width{
+    width: 90vw;
+}
+
+.selected-group{
+    border: 3px solid; 
+    border-color: rgb(134, 211, 250);
+}
+
+.table-width{
+    width: 40vw;
+}
+
+.panel-width{
+    width: 43vw;
+}
+
+.search-field{
+    width: 15.1vw;
+    margin-left: 0.5vw;
+}
+
+#map{
+    width: 86vw;
+    height: 60vh
+}
+
+.custom-header{
+    height: 3.3vh;
+}
+
+.view-margin-left{
+    margin-left: 55vw;
+}
+
+.view-margin-left-ext{
+    margin-left: 70vw;
+}
+
+.view-margin-right{
+    margin-right: 55vw;
+}
+
+::ng-deep .p-paginator {
+    padding-top: 20px;
+    align-content: start;
+}
+
+.view-margin-right-ext{
+    margin-right: 70vw;
+}
+
+.fieldset-content{
+    display: flex;
+    gap: 2rem;
+}
+
+.change-view-button{
+    background: rgba(0, 172, 255, 1);
+    border-color: rgba(0, 172, 255, 1);
+}
+
+
