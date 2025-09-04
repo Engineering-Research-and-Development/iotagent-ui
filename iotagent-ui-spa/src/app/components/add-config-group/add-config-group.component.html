@@ -1,9 +1,225 @@
-<p-card>
+<p-fieldset legend="{{ operationType }} Group" class="view-width">
     <form [formGroup]="form" class="flex flex-column">
-      <textarea rows="20" cols="30" pInputTextarea formControlName="configGroup" placeholder="{}"></textarea>
-      <div class="flex flex-row mt-2">
-        <p-button label="Cancel" [disabled]="loading" severity="secondary" (click)="onCancel()" class="mr-2"></p-button>
-        <p-button [label]="isEdit ? 'Save': 'Add'" [disabled]="loading" (click)="onSubmit()"></p-button>
-      </div>
-    </form>
-</p-card>
+      
+    <p-tabView [(activeIndex)]="activeTabIndex" (onChange)="onTabChange($event)">
+      <p-tabPanel header="Info" [disabled]="operation.length > 0">
+        <p-fieldset legend="Actions" styleClass="mb-2">
+          <p-button label="Cancel" severity="secondary" (click)="onCancel()" class="mr-2"></p-button>
+          <p-button label="Next" (click)="nextTab()" [disabled]="!areMetadataInserted()"></p-button>
+        </p-fieldset>
+        <p-fieldset legend="Metadata" styleClass="mt-2">
+            <div *ngIf="!groupToEdit" class="form-group mb-2">
+              <label><b>Context Broker Host:</b></label>
+              <input pInputText formControlName="cbHost" class="expandable-input-2" [ngClass]="{'invalid-field': isInvalid('cbHost')}" /> &nbsp;
+              <label class="invalid-label" *ngIf="isInvalid('cbHost')"><b>The Host must be an URL</b></label>
+            </div>
+
+            <div class="form-group mb-2">
+              <label><b>apikey:</b></label>
+              <input pInputText *ngIf="operationType === 'Add'" formControlName="apikey" class="expandable-input-2" [ngClass]="{'invalid-field': isInvalid('apikey')}"/>
+              <p *ngIf="operationType === 'Edit'">
+                {{ form.get('apikey')?.value || "—" }}
+              </p>
+            </div>
+
+            <div *ngIf="operationType === 'Edit'" class="form-group mb-2">
+              <label><b>Resource:</b></label>
+              <p *ngIf="operationType === 'Edit'">
+                {{ form.get('resource')?.value || "—" }}
+              </p>
+            </div>
+
+            <div *ngIf="operationType === 'Add'" class="form-group mb-2">
+                <div class="p-grid">
+                  <div class="p-col-12 p-md-6">
+                    <label><b>Resource:</b></label>
+                    <ng-container *ngIf="usePresetResources; else campoTesto">
+                      <p-dropdown
+                        class="minor-margin-left grid-element"
+                        [options]="presetResources"
+                        formControlName="resource"
+                        appendTo="body"
+                        [ngClass]="{'invalid-field': isInvalid('resource')}">
+                      </p-dropdown>
+                    </ng-container>
+
+                    <ng-template #campoTesto>
+                      <input
+                      pInputText
+                      formControlName="resource"
+                      class="minor-margin-left grid-element"
+                      [ngClass]="{'invalid-field': isInvalid('resource')}"
+                      />
+                    </ng-template>
+                  </div>
+              </div> &nbsp;
+              <p-inputSwitch
+              *ngIf="!noPresetResources"
+              id="switch" 
+              [(ngModel)]="usePresetResources" 
+              [ngModelOptions]="{standalone: true}" 
+              [disabled]="form.get('resource')?.value.length > 0" 
+              (onChange)="selectResources($event)">
+              </p-inputSwitch> &nbsp;
+              <label for="switch" *ngIf="!noPresetResources">Use preset resources</label>
+            </div>
+
+            <div class="form-group mb-2">
+              <div class="p-grid">
+                <div class="p-col-12 p-md-6">
+                  <label><b>Type:</b></label>
+                  <ng-container *ngIf="usePresetEntityTypes; else campoTesto">
+                    <p-dropdown
+                      class="margin-left grid-element"
+                      [options]="presetEntityTypes"
+                      formControlName="entity_type"
+                      appendTo="body"
+                      [ngClass]="{'invalid-field': isInvalid('entity_type')}">
+                    </p-dropdown>
+                  </ng-container>
+
+                  <ng-template #campoTesto>
+                    <input
+                    pInputText
+                    formControlName="entity_type"
+                    class="margin-left grid-element"
+                    [ngClass]="{'invalid-field': isInvalid('entity_type')}"
+                    />
+                  </ng-template>
+              </div>
+              </div> &nbsp;
+              <p-inputSwitch
+              *ngIf="!noPresetEntityTypes"
+              id="switch" 
+              [(ngModel)]="usePresetEntityTypes" 
+              [ngModelOptions]="{standalone: true}" 
+              [disabled]="form.get('entity_type')?.value.length > 0" 
+              (onChange)="selectEntityTypes($event)">
+              </p-inputSwitch> &nbsp;
+              <label for="switch" *ngIf="!noPresetEntityTypes">Use preset types</label>
+            </div>
+        </p-fieldset>
+        <p-fieldset legend="Tenant (Optional)" styleClass="mt-2">
+
+          <div class="form-group mb-2">
+            <label><b>Service:</b></label>
+            <input pInputText *ngIf="operationType === 'Add'" formControlName="service"/>
+            <p *ngIf="operationType === 'Edit'">
+              {{ form.get('service')?.value || "—" }}
+            </p>
+          </div>
+
+        </p-fieldset>
+      </p-tabPanel>
+      <p-tabPanel header="Context Information" [disabled]="!areMetadataInserted()">
+          <p-fieldset legend="Actions" styleClass="mb-2">
+            <p-button *ngIf="operation.length === 0" label="Prev" severity="secondary" (click)="previousTab()" class="mr-2"></p-button>
+            <p-button *ngIf="operation.length > 0" label="Cancel" severity="secondary" (click)="cancelOperation()" class="mr-2"></p-button>
+            <button [disabled]="operation.length > 0 || searchPerformed" pButton pRipple label="Add" icon="pi pi-plus" class="p-button-success mr-2" (click)="AddElement()"></button>
+            <p-button *ngIf="operation.length > 0" label="Save" [disabled]="isNotValid(dataToEdit.at(editableRowIndex))" (click)="saveOperation()" class="mr-2"></p-button>
+            <p-button *ngIf="operation.length === 0" label="Next" [disabled]="!isSummaryAvailable()" (click)="nextTab()"></p-button>
+          </p-fieldset>  
+          <label><b>Attribute Type:</b></label> &nbsp;
+          <p-dropdown
+            [disabled]="operation.length > 0"
+            (onChange)="changeDataToEdit($event)"
+            styleClass="mb-2"
+            [options]="editableData"
+            [placeholder]="dataToEditLabel"
+          ></p-dropdown>
+          <p-fieldset legend="{{ dataToEditLabel }} (Total: {{dataToEdit.length}})" styleClass="mt-2">
+            <div class="mb-2">
+              <input pInputText [disabled]="operation.length > 0" type="text" placeholder="Search by name" id="filter_controls" #filter_controls (input)="interactiveSearchControls(filter_controls.value)">
+              <i class="pi pi-search ml-2" (click)="operation.length === 0 ? searchControls(filter_controls.value): null"></i> 
+              <i class="pi pi-filter-slash view-margin-left ml-2" (click)="operation.length === 0 ? refreshControlsFilter(): null"></i>
+            </div>
+            <p-table 
+              *ngIf="dataToEdit"
+              [value]="dataToEdit.controls"
+              responsiveLayout="stack" 
+              [breakpoint]="'960px'"
+              [paginator]="true"
+              [rows]="10"
+              [rowsPerPageOptions]="[10, 20]"
+              >
+                <ng-template pTemplate="header">
+                  <tr>
+                      <th *ngIf="dataToEditLabel === 'Active' || dataToEditLabel === 'Lazy'">Object Id</th>
+                      <th *ngIf="dataToEditLabel === 'Static'">Value</th>
+                      <th *ngIf="dataToEditLabel === 'Commands'">Expression</th>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Actions</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-i="rowIndex">
+                    <tr [ngClass]="{ 'row-to-delete': rowToDeleteIndex === i}">
+                      <td *ngIf="dataToEditLabel === 'Active' || dataToEditLabel === 'Lazy'">
+                        <input pInputText *ngIf="(operation === 'Add' && editableRowIndex === i) || (operation === 'Edit' && editableRowIndex === i)" class="expandable-input" [formControl]="item.get('object_id')" />
+                        <p *ngIf="(operation.length === 0 || operation === 'Delete' || editableRowIndex != i) && item.get('object_id')?.value.length > 0">
+                          {{ item.get('object_id')?.value }}
+                        </p>
+                        <p *ngIf="(operation.length === 0 || operation === 'Delete' || editableRowIndex != i) && item.get('object_id')?.value.length === 0">
+                          —
+                        </p>
+                      </td>
+                      <td *ngIf="dataToEditLabel === 'Static'">
+                        <input pInputText [ngClass]="{'invalid-field': isNotValid(dataToEdit.at(editableRowIndex).get('value'))}" *ngIf="(operation === 'Add' && editableRowIndex === i) || (operation === 'Edit' && editableRowIndex === i)" class="expandable-input" [formControl]="item.get('value')" />
+                        <p *ngIf="operation.length === 0 || operation === 'Delete' || editableRowIndex != i">
+                          {{ item.get('value')?.value }}
+                        </p>
+                      </td>
+                      <td *ngIf="dataToEditLabel === 'Commands'">
+                        <input pInputText *ngIf="(operation === 'Add' && editableRowIndex === i) || (operation === 'Edit' && editableRowIndex === i)" class="expandable-input" [formControl]="item.get('expression')" />
+                        <p *ngIf="operation.length === 0 || operation === 'Delete' || editableRowIndex != i">
+                          {{ item.get('expression')?.value }}
+                        </p>
+                      </td>
+                      <td>
+                        <input pInputText [ngClass]="{'invalid-field': isNotValid(dataToEdit.at(editableRowIndex).get('name'))}" *ngIf="(operation === 'Add' && editableRowIndex === i) || (operation === 'Edit' && editableRowIndex === i)" class="expandable-input" [formControl]="item.get('name')" />
+                        <p *ngIf="operation.length === 0 || operation === 'Delete' || editableRowIndex != i">
+                          {{ item.get('name')?.value }}
+                        </p>
+                      </td>
+                      <td>
+                        <ng-container *ngIf="(operation === 'Add' && editableRowIndex === i) || (operation === 'Edit' && editableRowIndex === i)">
+                          <p-dropdown
+                            [options]="dataToEditLabel === 'Commands' ? ['Command'] : NGSITypes"
+                            [formControl]="item.get('type')"
+                            appendTo="body"
+                            [ngClass]="{'invalid-dropdown': isNotValid(dataToEdit.at(editableRowIndex).get('type'))}">
+                          </p-dropdown>
+                        </ng-container>
+                        <p *ngIf="operation.length === 0 || operation === 'Delete' || editableRowIndex != i">
+                          {{ item.get('type')?.value }}
+                        </p>
+                      </td>
+                      <td>
+                        <button [disabled]="operation.length > 0" pButton pRipple label="Edit" icon="pi pi-file-edit" class="p-button p-button-primary" (click)="editElement(i)"></button>
+                        <button [disabled]="operation.length > 0" pButton pRipple label="Delete" icon="pi pi-trash" class="p-button p-button-warning ml-2" (click)="deleteElement(i)"></button>
+                      </td>
+                    </tr>
+                    
+                    <tr *ngIf="rowToDeleteIndex === i">
+                      <td colspan="4" class="warning-message">
+                        This row will be deleted. Click on "Save" To Confirm otherwise click on "Cancel".
+                      </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+          </p-fieldset>
+      </p-tabPanel>
+    <p-tabPanel header="Summary" [disabled]="!isSummaryAvailable()">
+        <p-fieldset legend="Actions" styleClass="mb-2">
+          <p-button label="Prev" severity="secondary" (click)="previousTab()" class="mr-2"></p-button>
+          <p-button label="Submit" (click)="onSubmit()"></p-button>
+        </p-fieldset>
+        <div [hidden]="activeTabIndex != 2">
+          <p-fieldset legend="Configuration">
+            <div id="map">The summary is beign prepared. If nothing is shown after some moments, please select another tab and then re-selct this one.</div>
+          </p-fieldset>
+        </div>
+    </p-tabPanel>
+  </p-tabView>
+  </form>
+</p-fieldset>
